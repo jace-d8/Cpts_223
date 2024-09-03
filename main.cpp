@@ -1,7 +1,10 @@
 /*
 ADVANTAGES/DISADVANTAGES LINKED LIST
-
+Advantage -
+Disadvantage -
 ADVANTAGES/DISADVANTAGES ARRAY
+Advantage -
+Disadvantage -
 */
 
 #include <fstream>
