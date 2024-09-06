@@ -12,15 +12,13 @@ Disadvantage -
 #include <iostream>
 #include <string>
 #include <cstdlib>
-#include "linkedlist.cpp"
-
 using namespace std;
+#include "linkedlist.h"
 
 void populate(Linked_List<string, string> *mainlist) // Read CSV and input data into a linked list
 {
-    // ====================
-    // ======= code =======
-    // ====================
+    mainlist->open_file("commands.csv");
+
 }
 
 int main()

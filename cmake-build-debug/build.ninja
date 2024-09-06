@@ -55,18 +55,6 @@ build CMakeFiles/PA1.dir/main.cpp.o: CXX_COMPILER__PA1_unscanned_Debug /Users/ja
   OBJECT_DIR = CMakeFiles/PA1.dir
   OBJECT_FILE_DIR = CMakeFiles/PA1.dir
 
-build CMakeFiles/PA1.dir/linkedlist.cpp.o: CXX_COMPILER__PA1_unscanned_Debug /Users/jacedunn/CLionProjects/Cpts_223/linkedlist.cpp || cmake_object_order_depends_target_PA1
-  DEP_FILE = CMakeFiles/PA1.dir/linkedlist.cpp.o.d
-  FLAGS = -Wall -g -std=gnu++11 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.5.sdk -fcolor-diagnostics
-  OBJECT_DIR = CMakeFiles/PA1.dir
-  OBJECT_FILE_DIR = CMakeFiles/PA1.dir
-
-build CMakeFiles/PA1.dir/Node.cpp.o: CXX_COMPILER__PA1_unscanned_Debug /Users/jacedunn/CLionProjects/Cpts_223/Node.cpp || cmake_object_order_depends_target_PA1
-  DEP_FILE = CMakeFiles/PA1.dir/Node.cpp.o.d
-  FLAGS = -Wall -g -std=gnu++11 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.5.sdk -fcolor-diagnostics
-  OBJECT_DIR = CMakeFiles/PA1.dir
-  OBJECT_FILE_DIR = CMakeFiles/PA1.dir
-
 
 # =============================================================================
 # Link build statements for EXECUTABLE target PA1
@@ -75,7 +63,7 @@ build CMakeFiles/PA1.dir/Node.cpp.o: CXX_COMPILER__PA1_unscanned_Debug /Users/ja
 #############################################
 # Link the executable PA1
 
-build PA1: CXX_EXECUTABLE_LINKER__PA1_Debug CMakeFiles/PA1.dir/main.cpp.o CMakeFiles/PA1.dir/linkedlist.cpp.o CMakeFiles/PA1.dir/Node.cpp.o
+build PA1: CXX_EXECUTABLE_LINKER__PA1_Debug CMakeFiles/PA1.dir/main.cpp.o
   FLAGS = -Wall -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.5.sdk
   OBJECT_DIR = CMakeFiles/PA1.dir
   POST_BUILD = :
