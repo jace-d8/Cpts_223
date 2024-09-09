@@ -1,6 +1,5 @@
 #ifndef NODE_H
 #define NODE_H
-#include <string>
 using std::string;
 
 template <typename t, typename d>

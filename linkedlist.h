@@ -8,16 +8,18 @@ template <typename t, typename d>
 class Linked_List
 {
 public:
-    Linked_List(Node<t, d> new_head): _head(new_head){}
+    Linked_List(){_head = NULL;}; // NULL > nullptr?
     ~Linked_List();
 
     bool removeFromFront();
 
-    void insert_at_front(Node<t, d> new_node);
+    void insert_at_front(Node<t, d> *new_node);
 
     void open_file(const std::string& file_name);
 
     void upload_file();
+
+    void close_file();
 
     bool is_empty();
 
@@ -40,7 +42,7 @@ bool Linked_List<t,d >::removeFromFront()
     const Node<t, d>* tempNode = _head;
     if(!this->is_empty())
     {
-        _head = _head->_next;
+        _head = _head->get_next();
         delete tempNode;
         return true;
     }
@@ -48,7 +50,7 @@ bool Linked_List<t,d >::removeFromFront()
 }
 
 template<typename t, typename d>
-void Linked_List<t, d>::insert_at_front(Node<t, d> new_node)
+void Linked_List<t, d>::insert_at_front(Node<t, d> *new_node)
 {
     Node<t, d>* tmp = _head;
     if(this->is_empty())
@@ -57,7 +59,7 @@ void Linked_List<t, d>::insert_at_front(Node<t, d> new_node)
     }else
     {
         _head = new_node;
-        _head->next = tmp;
+        _head->set_next(tmp);
     }
 }
 
@@ -69,7 +71,7 @@ void Linked_List<t, d>::open_file(const std::string& file_name)
         cout<<"File not found"<<endl;
     }else
     {
-        _input_stream.open(file_name);
+        _input_stream.open(file_name, std::ios::in);
 
     }
 }
@@ -78,12 +80,21 @@ template<typename t, typename d>
 void Linked_List<t,d>::upload_file()
 {
     char cmnd[99] = "", ds[99] = "";
-    Node<t, d>* tmp = _head;
+    //_input_stream.open("commands.csv", std::ios::in); weird error
     while(_input_stream.good())
     {
         _input_stream.getline(cmnd, 99, ',');
         _input_stream.getline(ds, 99);
         insert_at_front(new Node<t, d>(cmnd, ds));
+    }
+}
+
+template<typename t, typename d>
+void Linked_List<t,d>::close_file()
+{
+    if(_input_stream.is_open())
+    {
+        _input_stream.close();
     }
 }
 

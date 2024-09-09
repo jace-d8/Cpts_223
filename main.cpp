@@ -18,15 +18,14 @@ using namespace std;
 void populate(Linked_List<string, string> *mainlist) // Read CSV and input data into a linked list
 {
     mainlist->open_file("commands.csv");
-
+    mainlist->upload_file();
+    mainlist->close_file();
 }
 
 int main()
 {
-
-    // =====================
-    // ===== some code =====
-    // =====================
+    Linked_List<string, string> cmd_list;
+    populate(&cmd_list);
 
     while (true)
     {
