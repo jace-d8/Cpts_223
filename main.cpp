@@ -26,6 +26,7 @@ int main()
 {
     Linked_List<string, string> cmd_list;
     populate(&cmd_list);
+    cmd_list.printList();
 
     while (true)
     {

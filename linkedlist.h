@@ -21,6 +21,8 @@ public:
 
     void close_file();
 
+    void printList();
+
     bool is_empty();
 
 private:
@@ -80,7 +82,6 @@ template<typename t, typename d>
 void Linked_List<t,d>::upload_file()
 {
     char cmnd[99] = "", ds[99] = "";
-    //_input_stream.open("commands.csv", std::ios::in); weird error
     while(_input_stream.good())
     {
         _input_stream.getline(cmnd, 99, ',');
@@ -96,6 +97,17 @@ void Linked_List<t,d>::close_file()
     {
         _input_stream.close();
     }
+}
+
+template<typename t, typename d>
+void Linked_List<t,d>::printList()
+{
+    Node<t,d>* temp = _head;
+    while (temp != nullptr) {
+        cout << temp->get_command() << " " << temp->get_description() << endl;
+        temp = temp->get_next();
+    }
+    cout << endl;
 }
 
 template<typename t, typename d>
