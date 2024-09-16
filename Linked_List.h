@@ -1,7 +1,14 @@
-#pragma once
+//
+// Created by Jace Dunn on 9/16/24.
+//
+#ifndef LINKED_LIST
+#define LINKED_LIST
 #include <fstream>
+#include <iostream>
 #include "Node.h"
 using std::ifstream;
+using std::endl;
+using std::cout;
 // Must be a singly linked list
 
 template <typename t, typename d>
@@ -117,3 +124,4 @@ bool Linked_List<t,d>::is_empty()
         return true;
     return false;
 }
+#endif

@@ -90,7 +90,8 @@
 			"sourceIndexes" : 
 			[
 				1,
-				2
+				2,
+				3
 			]
 		}
 	],
@@ -104,12 +105,17 @@
 		},
 		{
 			"backtrace" : 1,
-			"path" : "linkedlist.h",
+			"path" : "array.h",
 			"sourceGroupIndex" : 1
 		},
 		{
 			"backtrace" : 1,
-			"path" : "Node.h",
+			"path" : "node.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"path" : "Linked_List.h",
 			"sourceGroupIndex" : 1
 		}
 	],
