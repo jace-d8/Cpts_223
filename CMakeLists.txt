@@ -7,4 +7,5 @@ set(CMAKE_BUILD_TYPE Debug)
 
 add_executable(PA1 main.cpp
         linkedlist.h
-        Node.h)
+        Node.h
+)
