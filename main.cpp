@@ -6,6 +6,7 @@ ADVANTAGES/DISADVANTAGES ARRAY
 Advantage -
 Disadvantage -
 */
+// naming conventions suck idk if this can go in there
 
 #include <fstream>
 #include <iostream>

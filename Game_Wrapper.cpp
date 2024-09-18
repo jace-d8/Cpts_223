@@ -11,7 +11,7 @@ Game_Wrapper::Game_Wrapper(Linked_List<string , string>* cmd_list)
 		cout << "How many questions could you like to try?(5-30): ";
 		cin >> questionCount;
 	}while(questionCount > 30 || questionCount < 5);
-	run_game();
+	run_game(cmd_list);
 
 }
 
@@ -19,9 +19,7 @@ void Game_Wrapper::run_game(Linked_List<string , string>* cmd_list)
 {
 	std::random_device rd;
 	std::mt19937 gen(rd());
-
 	std::vector<int> questions(30); // going to use random.python for this bit
-	std::uniform_int_distribution<> distrib(0, questionCount - 1);
 	for (int i = 0; i < 30; ++i)
 	{
 		questions[i] = i + 1;
@@ -37,6 +35,8 @@ void Game_Wrapper::run_game(Linked_List<string , string>* cmd_list)
 		std::shuffle(questions.begin(), questions.end(), gen);
 		c2 = questions[0];
 		c3 = questions[1];
+		get_questions(cmd_list);
+		display_questions(cmd_list);
 	}
 }
 
@@ -47,16 +47,32 @@ void Game_Wrapper::get_questions(Linked_List<string , string>* cmd_list)
 	{
 		tmp = tmp->get_next();
 	}
-	cout << tmp->get_command() << endl;
+	cmd = tmp->get_command();
+	correctChoice = tmp->get_description();
 	tmp = cmd_list->get_head();
 	for (int i = 0; i < c2; ++i)
 	{
 		tmp = tmp->get_next();
 	}
-	cout << tmp->get_description() << endl;
+	choice2 = tmp->get_description();
 	tmp = cmd_list->get_head();
 	for (int i = 0; i < c3; ++i)
 	{
 		tmp = tmp->get_next();
+	}
+	choice3 = tmp->get_description();
+}
+
+void Game_Wrapper::display_questions(Linked_List<string , string>* cmd_list)
+{
+	std::random_device rd;
+	std::mt19937 gen(rd());
+
+	vector<string> choices = {correctChoice, choice2, choice3};
+	cout << "Command: " << cmd << endl;
+	std::shuffle(choices.begin(), choices.end(), gen);
+	for (int i = 0; i < choices.size(); ++i)
+	{
+		cout << i + 1 << ". " << choices[i] << endl;
 	}
 }

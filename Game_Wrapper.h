@@ -18,11 +18,12 @@ public:
 	Game_Wrapper(Linked_List<string , string>* cmd_list);
 	void run_game(Linked_List<string , string>* cmd_list);
 	void get_questions(Linked_List<string , string>* cmd_list);
+	void display_questions(Linked_List<string , string>* cmd_list);
 
 private:
 	int questionCount = 5;
-	int answer = 0;
-	int c2 = 0, c3 = 0;
+	int answer = 0, c2 = 0, c3 = 0;
+	string cmd, correctChoice, choice2, choice3;
 };
 
 
