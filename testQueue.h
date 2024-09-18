@@ -8,10 +8,10 @@
 
 
 class testQueue {
-
-	void test_size();
+public:
 	void test_isEmpty();
 	void test_isFull();
+	void test_size();
 	void test_dequeue();
 	void test_enqueue(); // need two for these three idrk why
 	void test_peek();

@@ -7,6 +7,7 @@
 #include <iostream>
 #include <cstdlib>
 using namespace std;
+#define SIZE 10
 
 class my_queue
 {
@@ -62,7 +63,7 @@ void my_queue::dequeue()
 }
 
 // Utility function to add an item to the queue
-void my_queue::enqueue(int item)
+void my_queue::enqueue(int x)
 {
     // check for queue overflow
     if (isFull())
@@ -71,10 +72,10 @@ void my_queue::enqueue(int item)
         return;
     }
 
-    cout << "Inserting " << item << '\n';
+    //cout << "Inserting " << x << '\n';
 
     rear = (rear + 1) % capacity;
-    arr[rear] = item;
+    arr[rear] = x;
     count++;
 }
 
@@ -92,7 +93,7 @@ int my_queue::peek()
 // Utility function to return the size of the queue
 int my_queue::size()
 {
-    return count + 1; // may not need +1
+    return count;
 }
 
 // Utility function to check if the queue is empty or not
@@ -104,7 +105,7 @@ bool my_queue::isEmpty()
 // Utility function to check if the queue is full or not
 bool my_queue::isFull()
 {
-    return (size()-1 == capacity); // my need to get rid of -1 here
+    return (size() == capacity); // my need to get rid of -1 here
 }
 
 
