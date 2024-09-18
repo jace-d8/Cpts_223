@@ -8,12 +8,11 @@ Disadvantage -
 */
 
 #include <fstream>
-#include <sstream>
 #include <iostream>
 #include <string>
-#include <cstdlib>
-using namespace std;
+#include "Game_Wrapper.h"
 #include "Linked_List.h"
+using namespace std;
 
 void populate(Linked_List<string, string> *mainlist) // Read CSV and input data into a linked list
 {
@@ -29,7 +28,6 @@ int main()
     cmd_list.printList();
 
     string userName, newCommandToAdd, oldCommandTodelete;
-    int questionCount = 0;
 
     int selection;
     while (true)
@@ -56,10 +54,10 @@ int main()
                 {
                     cout << "================================= Game Rule"
                     "===================================" << endl;
-                    cout << "This is a matching game \"2\" where you will be"
-                    "given a linux command and have to match the cmd with its description.\n";
-                    cout << "You will get to choose from 3 different description options"
-                    "each correct anwser will return a point.\n";
+                    cout << "This is a matching game where you will be"
+                    " given a linux command and have to match the cmd with its description.\n";
+                    cout << "You will get to choose from 3 different description options."
+                    " Each correct answer will return a point.\n";
                     cout << "You can also add and delete commands as needed.\n";
                     cout << "================================= Game Rule"
                     "===================================" << endl << endl;
@@ -69,12 +67,7 @@ int main()
                 {
                     cout << "Please enter your name: ";
                     cin >> userName;
-                    do
-                    {
-                        cout << "How many questions could you like to try?(5-30)";
-                        cin >> questionCount;
-                    }while(questionCount > 30 || questionCount < 5);
-
+                    Game_Wrapper game_wrapper(&cmd_list);
                     break;
                 }
                 case 4: // Add Command

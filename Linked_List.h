@@ -26,6 +26,11 @@ public:
 
     void upload_file();
 
+    Node<t, d> * get_head() const
+    {
+        return _head;
+    }
+
     void close_file();
 
     void printList();

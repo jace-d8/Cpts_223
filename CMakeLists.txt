@@ -8,4 +8,6 @@ set(CMAKE_BUILD_TYPE Debug)
 add_executable(PA1 main.cpp
         array.h
         node.h
-        Linked_List.h)
+        Linked_List.h
+        Game_Wrapper.cpp
+        Game_Wrapper.h)
