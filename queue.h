@@ -44,6 +44,7 @@ inline my_queue::~my_queue()
 {
     delete[] arr; // you are not required to test this function;
     // however, are there issues with it?
+    // yes delete[] is required
 }
 
 // Utility function to remove front element from the queue

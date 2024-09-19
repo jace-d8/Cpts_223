@@ -13,8 +13,11 @@ public:
 	void test_isFull();
 	void test_size();
 	void test_dequeue();
-	void test_enqueue(); // need two for these three idrk why
+	void test_enqueue();
 	void test_peek();
+	void test_dequeueEmpty();
+	void test_enqueueFull();
+	void test_peekEmpty();
 };
 
 
