@@ -67,6 +67,7 @@ void Game_Wrapper::display_questions(Linked_List<string , string>* cmd_list)
 {
 	std::random_device rd;
 	std::mt19937 gen(rd());
+	int selection;
 
 	vector<string> choices = {correctChoice, choice2, choice3};
 	cout << "Command: " << cmd << endl;
@@ -74,5 +75,18 @@ void Game_Wrapper::display_questions(Linked_List<string , string>* cmd_list)
 	for (int i = 0; i < choices.size(); ++i)
 	{
 		cout << i + 1 << ". " << choices[i] << endl;
+	}
+	do
+	{
+		cout << "What is your selection: " << endl;
+		cin >> selection;
+	}while(selection > 3 || selection < 1);
+
+	if (choices[selection - 1] == correctChoice)
+	{
+		cout << "One point added!" << endl;
+	}else
+	{
+		cout << "One point removed!" << endl;
 	}
 }

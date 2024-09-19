@@ -34,7 +34,7 @@ int main()
     while (true)
     {
         cout << "Please select an option listed below:\n";
-        cout << "1. Game Rules\n2. Play Game\n3. Load Previous Game\n4. Add"
+        cout << "1. Game Rules\n2. Play Game\n3. Load Previous Game\n4. Add "
         "Command\n5. Remove Command\n6. Exit\n";
         cout << "Your selection: ";
         cin >> selection;

@@ -12,5 +12,5 @@ class ArrayNode
 template<typename t, typename d>
 class Array
 {
-	// ???
+	ArrayNode<t, d>
 };
