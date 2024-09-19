@@ -23,14 +23,14 @@ public:
 
     void dequeue();
     void enqueue(int x);
-    int peek();
-    int size();
-    bool isEmpty();
-    bool isFull();
+    int peek() const;
+    int size() const;
+    bool isEmpty() const;
+    bool isFull() const;
 };
 
 // Constructor to initialize queue
-my_queue::my_queue(int size)
+inline my_queue::my_queue(int size)
 {
     arr = new int[size];
     capacity = size;
@@ -40,14 +40,14 @@ my_queue::my_queue(int size)
 }
 
 // Destructor to free memory allocated to the queue
-my_queue::~my_queue()
+inline my_queue::~my_queue()
 {
     delete[] arr; // you are not required to test this function;
     // however, are there issues with it?
 }
 
 // Utility function to remove front element from the queue
-void my_queue::dequeue()
+inline void my_queue::dequeue()
 {
     // check for queue underflow
     if (isEmpty())
@@ -63,7 +63,7 @@ void my_queue::dequeue()
 }
 
 // Utility function to add an item to the queue
-void my_queue::enqueue(int x)
+inline void my_queue::enqueue(int x)
 {
     // check for queue overflow
     if (isFull())
@@ -72,7 +72,7 @@ void my_queue::enqueue(int x)
         return;
     }
 
-    //cout << "Inserting " << x << '\n';
+    cout << "Inserting " << x << '\n';
 
     rear = (rear + 1) % capacity;
     arr[rear] = x;
@@ -80,7 +80,7 @@ void my_queue::enqueue(int x)
 }
 
 // Utility function to return front element in the queue
-int my_queue::peek()
+inline int my_queue::peek() const
 {
     if (isEmpty())
     {
@@ -91,19 +91,19 @@ int my_queue::peek()
 }
 
 // Utility function to return the size of the queue
-int my_queue::size()
+inline int my_queue::size() const
 {
     return count;
 }
 
 // Utility function to check if the queue is empty or not
-bool my_queue::isEmpty()
+inline bool my_queue::isEmpty() const
 {
     return (size() == 0);
 }
 
 // Utility function to check if the queue is full or not
-bool my_queue::isFull()
+inline bool my_queue::isFull() const
 {
     return (size() == capacity); // my need to get rid of -1 here
 }
