@@ -77,6 +77,14 @@ void testQueue::test_isFull()
 	{
 		cout<<"test failed"<<endl;
 	}
+	my_queue q2;
+	if (q2.isFull())
+	{
+		cout<<"test failed"<<endl;
+	}else
+	{
+		cout<<"test passed"<<endl;
+	}
 }
 
 /* Test ID: Size check - SC
