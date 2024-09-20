@@ -8,6 +8,7 @@
 #include <vector>
 #include <random>
 
+#include "Array.h"
 #include "Linked_List.h"
 using namespace std;
 
@@ -15,10 +16,10 @@ using namespace std;
 class Game_Wrapper {
 
 public:
-	Game_Wrapper(Linked_List<string , string>* cmd_list);
-	void run_game(Linked_List<string , string>* cmd_list);
-	void get_questions(Linked_List<string , string>* cmd_list);
-	void display_questions(Linked_List<string , string>* cmd_list);
+	Game_Wrapper(Linked_List<string , string>* cmd_list, Array<string, int>* profiles);
+	void run_game(Linked_List<string , string>* cmd_list, Array<string, int>* profiles);
+	void get_questions(Linked_List<string , string>* cmd_list, Array<string, int>* profiles);
+	void display_questions(Linked_List<string , string>* cmd_list, Array<string, int>* profiles);
 
 private:
 	int questionCount = 5;

@@ -4,18 +4,18 @@
 
 #include "Game_Wrapper.h"
 
-Game_Wrapper::Game_Wrapper(Linked_List<string , string>* cmd_list)
+Game_Wrapper::Game_Wrapper(Linked_List<string , string>* cmd_list, Array<string, int>* profiles)
 {
 	do
 	{
 		cout << "How many questions could you like to try?(5-30): ";
 		cin >> questionCount;
 	}while(questionCount > 30 || questionCount < 5);
-	run_game(cmd_list);
+	run_game(cmd_list, profiles);
 
 }
 
-void Game_Wrapper::run_game(Linked_List<string , string>* cmd_list)
+void Game_Wrapper::run_game(Linked_List<string , string>* cmd_list, Array<string, int>* profiles)
 {
 	std::random_device rd;
 	std::mt19937 gen(rd());
@@ -35,12 +35,12 @@ void Game_Wrapper::run_game(Linked_List<string , string>* cmd_list)
 		std::shuffle(questions.begin(), questions.end(), gen);
 		c2 = questions[0];
 		c3 = questions[1];
-		get_questions(cmd_list);
-		display_questions(cmd_list);
+		get_questions(cmd_list, profiles);
+		display_questions(cmd_list, profiles);
 	}
 }
 
-void Game_Wrapper::get_questions(Linked_List<string , string>* cmd_list)
+void Game_Wrapper::get_questions(Linked_List<string , string>* cmd_list, Array<string, int>* profiles)
 {
 	Node<string, string>* tmp = cmd_list->get_head();
 	for (int i = 0; i < answer; ++i)
@@ -63,12 +63,12 @@ void Game_Wrapper::get_questions(Linked_List<string , string>* cmd_list)
 	choice3 = tmp->get_description();
 }
 
-void Game_Wrapper::display_questions(Linked_List<string , string>* cmd_list)
+void Game_Wrapper::display_questions(Linked_List<string , string>* cmd_list, Array<string, int>* profiles)
 {
 	std::random_device rd;
 	std::mt19937 gen(rd());
 	int selection;
-
+	// here
 	vector<string> choices = {correctChoice, choice2, choice3};
 	cout << "Command: " << cmd << endl;
 	std::shuffle(choices.begin(), choices.end(), gen);
@@ -85,6 +85,7 @@ void Game_Wrapper::display_questions(Linked_List<string , string>* cmd_list)
 	if (choices[selection - 1] == correctChoice)
 	{
 		cout << "One point added!" << endl;
+
 	}else
 	{
 		cout << "One point removed!" << endl;

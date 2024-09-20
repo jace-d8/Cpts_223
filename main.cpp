@@ -13,6 +13,7 @@ Disadvantage -
 #include <string>
 #include "Game_Wrapper.h"
 #include "Linked_List.h"
+#include "Array.h"
 using namespace std;
 
 void populate(Linked_List<string, string> *mainlist) // Read CSV and input data into a linked list
@@ -25,8 +26,9 @@ void populate(Linked_List<string, string> *mainlist) // Read CSV and input data 
 int main()
 {
     Linked_List<string, string> cmd_list;
+    Array<string, int> profiles;
     populate(&cmd_list);
-    cmd_list.printList();
+    //cmd_list.printList();
 
     string userName, newCommandToAdd, oldCommandTodelete;
 
@@ -68,7 +70,8 @@ int main()
                 {
                     cout << "Please enter your name: ";
                     cin >> userName;
-                    Game_Wrapper game_wrapper(&cmd_list);
+                    profiles.insert(userName);
+                    Game_Wrapper game_wrapper(&cmd_list, &profiles);
                     break;
                 }
                 case 4: // Add Command
