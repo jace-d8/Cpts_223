@@ -44,7 +44,7 @@ class Array
 {
 public:
 	Array();
-	ArrayNode<t, d>* insert(t name);
+	ArrayNode<t, d> insert(t name);
 	ArrayNode<t, d> arr[100];
 	fstream profiles;
 };
@@ -70,7 +70,7 @@ Array<t,d>::Array()
 }
 
 template<typename t, typename d>
-ArrayNode<t,d>* Array<t, d>::insert(t name)
+ArrayNode<t,d> Array<t, d>::insert(t name)
 {
 	for (int i = 0; i < 100; ++i)
 	{

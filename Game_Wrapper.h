@@ -16,10 +16,10 @@ using namespace std;
 class Game_Wrapper {
 
 public:
-	Game_Wrapper(Linked_List<string , string>* cmd_list, Array<string, int>* profiles);
-	void run_game(Linked_List<string , string>* cmd_list, Array<string, int>* profiles);
-	void get_questions(Linked_List<string , string>* cmd_list, Array<string, int>* profiles);
-	void display_questions(Linked_List<string , string>* cmd_list, Array<string, int>* profiles);
+	Game_Wrapper(Linked_List<string , string>* cmd_list, ArrayNode<string, int>* user);
+	void run_game(Linked_List<string , string>* cmd_list, ArrayNode<string, int>* user);
+	void get_questions(Linked_List<string , string>* cmd_list);
+	void display_questions(Linked_List<string , string>* cmd_list, ArrayNode<string, int>* user);
 
 private:
 	int questionCount = 5;

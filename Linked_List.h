@@ -18,9 +18,11 @@ public:
     Linked_List(){_head = NULL;}; // NULL > nullptr?
     ~Linked_List();
 
-    bool removeFromFront();
+    bool remove_from_front();
 
     void insert_at_front(Node<t, d> *new_node);
+
+    bool search_linked_list(string cmd);
 
     void open_file(const std::string& file_name);
 
@@ -33,7 +35,7 @@ public:
 
     void close_file();
 
-    void printList();
+    void print_list();
 
     bool is_empty();
 
@@ -47,11 +49,11 @@ Linked_List<t, d>::~Linked_List()
 {
     while(!is_empty())
     {
-        removeFromFront();
+        remove_from_front();
     }
 }
 template<typename t, typename d>
-bool Linked_List<t,d >::removeFromFront()
+bool Linked_List<t,d >::remove_from_front()
 {
     const Node<t, d>* tempNode = _head;
     if(!this->is_empty())
@@ -75,6 +77,21 @@ void Linked_List<t, d>::insert_at_front(Node<t, d> *new_node)
         _head = new_node;
         _head->set_next(tmp);
     }
+}
+
+template<typename t, typename d>
+bool Linked_List<t, d>::search_linked_list(string cmd)
+{
+    Node<t, d>* temp = _head;
+    while(temp != nullptr)
+    {
+        if (temp->get_command() == cmd)
+        {
+            return true;
+        }
+        temp = temp->get_next();
+    }
+    return false;
 }
 
 template<typename t, typename d>
@@ -112,7 +129,7 @@ void Linked_List<t,d>::close_file()
 }
 
 template<typename t, typename d>
-void Linked_List<t,d>::printList()
+void Linked_List<t,d>::print_list()
 {
     Node<t,d>* temp = _head;
     while (temp != nullptr) {

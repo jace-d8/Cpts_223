@@ -30,7 +30,7 @@ int main()
     populate(&cmd_list);
     //cmd_list.printList();
 
-    string userName, newCommandToAdd, oldCommandTodelete;
+    string userName, newCommandToAdd, oldCommandTodelete, newCommandDescription;
 
     int selection;
     while (true)
@@ -70,22 +70,33 @@ int main()
                 {
                     cout << "Please enter your name: ";
                     cin >> userName;
-                    profiles.insert(userName);
-                    Game_Wrapper game_wrapper(&cmd_list, &profiles);
+                    ArrayNode<string, int> current_user = profiles.insert(userName);
+                    Game_Wrapper game_wrapper(&cmd_list, &current_user); // this works but current needs to go in array
                     break;
                 }
                 case 4: // Add Command
                 {
-                    cout << "To add a command to the library, please enter the"
-                    "command name that you would add: ";
-                    cin >> newCommandToAdd;
+                    do
+                    {
+                        cout << "To add a command to the library, please enter the"
+                         "command name that you would add: ";
+                        cin >> newCommandToAdd;
+                    }while(cmd_list.search_linked_list(newCommandToAdd));
+                    cout << "What is the command description: ";
+                    cin >> newCommandDescription;
+                    cmd_list.insert_at_front(new Node<string, string>(newCommandToAdd, newCommandDescription));
                     break;
                 }
                 case 5: // Remove Command
                 {
-                    cout << "Please enter the name of the command that you would"
-                    "remove: ";
-                    cin >> oldCommandTodelete;
+                    do
+                    {
+                        cout << "Please enter the name of the command that you would"
+                        "remove: ";
+                        cin >> oldCommandTodelete;
+                    }while(!cmd_list.search_linked_list(oldCommandTodelete));
+
+
                     break;
                 }
                 case 6: // Exit
