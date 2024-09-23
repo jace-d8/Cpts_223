@@ -44,44 +44,68 @@ class Array
 {
 public:
 	Array();
-	ArrayNode<t, d> insert(t name);
-	ArrayNode<t, d> arr[100];
-	fstream profiles;
+	ArrayNode<t, d>* insert(t name);
+	void upload_file();
+private:
+	ArrayNode<t, d> _arr[100];
+	fstream _profiles_stream;
 };
 
 template<typename t, typename d>
-Array<t,d>::Array()
+Array<t,d>::Array() // download file upon init
 {
 	int i = 0;
 	char buffer[100];
-	if (!profiles.is_open())
+	if (!_profiles_stream.is_open())
 	{
-		profiles.open("profiles.csv");
+		_profiles_stream.open("profiles.csv", std::ios::in);
 	}
-	while(profiles.good())
+	while(_profiles_stream.good())
 	{
-		profiles.getline(buffer, 99, ',');
-		arr[i].set_name(buffer);
-		profiles.getline(buffer, 99);
-		arr[i].set_score(atof(buffer));
+		_profiles_stream.getline(buffer, 99, ',');
+		_arr[i].set_name(buffer);
+		_profiles_stream.getline(buffer, 99);
+		_arr[i].set_score(atof(buffer));
 		++i;
 	}
-	std::cout << arr[0].get_name() << " " << arr[0].get_score();
 }
 
 template<typename t, typename d>
-ArrayNode<t,d> Array<t, d>::insert(t name)
+ArrayNode<t,d>* Array<t, d>::insert(t name)
 {
-	for (int i = 0; i < 100; ++i)
+	for (auto & i : _arr)
 	{
-		if (arr[i].get_name() == name)
+		if (i.get_name() == name)
 		{
-			return arr[i];
+			return &i;
 		}
-		if (arr[i].get_name() == "")
+		if (i.get_name() == "")
 		{
-			arr[i].set_name(name);
-			return arr[i];
+			i.set_name(name);
+			return &i;
 		}
+	}
+	return nullptr;
+}
+
+template<typename t, typename d>
+void Array<t, d>::upload_file()
+{
+	_profiles_stream.open("profiles.csv", std::ios::out);
+	if (_profiles_stream.is_open())
+	{
+		for (auto & i : _arr)
+		{
+			if (i.get_name() == "")
+			{
+				break; // Once we reach an empty node, break
+			}
+			_profiles_stream << i.get_name() << "," << i.get_score() << "\n";
+			std::cout << i.get_name() << "," << i.get_score() << "\n";
+		}
+		_profiles_stream.close();
+	}else
+	{
+		std::cout << "File could not be opened" << std::endl;
 	}
 }

@@ -22,9 +22,9 @@ public:
 	void display_questions(Linked_List<string , string>* cmd_list, ArrayNode<string, int>* user);
 
 private:
-	int questionCount = 5;
-	int answer = 0, c2 = 0, c3 = 0;
-	string cmd, correctChoice, choice2, choice3;
+	int _question_count = 5;
+	int _answer = 0, _c2 = 0, _c3 = 0;
+	string _cmd, _correct_choice, _choice2, _choice3;
 };
 
 

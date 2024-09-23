@@ -9,7 +9,7 @@ using std::string;
 template <typename t, typename d>
 class Node {
 public:
-	Node(t new_name, d new_score);
+	Node(t new_command, d new_description);
 	~Node() = default;
 
 	void set_next(Node<t, d> *next);
@@ -28,11 +28,11 @@ private:
 };
 
 template<typename t, typename d>
-Node<t, d>::Node(t new_name, d new_score)
+Node<t, d>::Node(t new_command, d new_description)
 {
 	_next = nullptr;
-	_command = new_name;
-	_description = new_score;
+	_command = new_command;
+	_description = new_description;
 }
 template<typename t, typename d>
 Node<t, d> *Node<t,d>::get_next() const

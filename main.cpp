@@ -19,7 +19,7 @@ using namespace std;
 void populate(Linked_List<string, string> *mainlist) // Read CSV and input data into a linked list
 {
     mainlist->open_file("commands.csv");
-    mainlist->upload_file();
+    mainlist->download_file();
     mainlist->close_file();
 }
 
@@ -28,7 +28,6 @@ int main()
     Linked_List<string, string> cmd_list;
     Array<string, int> profiles;
     populate(&cmd_list);
-    //cmd_list.printList();
 
     string userName, newCommandToAdd, oldCommandTodelete, newCommandDescription;
 
@@ -68,10 +67,13 @@ int main()
                 }
                 case 2: case 3: // 2. Play Game; 3. Load Previous Game
                 {
-                    cout << "Please enter your name: ";
-                    cin >> userName;
-                    ArrayNode<string, int> current_user = profiles.insert(userName);
-                    Game_Wrapper game_wrapper(&cmd_list, &current_user); // this works but current needs to go in array
+                    do
+                    {
+                        cout << "Please enter your name: ";
+                        cin >> userName;
+                    }while (userName.empty());
+                    ArrayNode<string, int> *current_user = profiles.insert(userName);
+                    Game_Wrapper game_wrapper(&cmd_list, current_user); // this works but current needs to go in array
                     break;
                 }
                 case 4: // Add Command
@@ -79,11 +81,12 @@ int main()
                     do
                     {
                         cout << "To add a command to the library, please enter the"
-                         "command name that you would add: ";
+                         " command name that you would add: ";
                         cin >> newCommandToAdd;
                     }while(cmd_list.search_linked_list(newCommandToAdd));
                     cout << "What is the command description: ";
                     cin >> newCommandDescription;
+                    newCommandDescription = "\"" + newCommandToAdd + "\"";
                     cmd_list.insert_at_front(new Node<string, string>(newCommandToAdd, newCommandDescription));
                     break;
                 }
@@ -92,15 +95,16 @@ int main()
                     do
                     {
                         cout << "Please enter the name of the command that you would"
-                        "remove: ";
+                        " like to remove: ";
                         cin >> oldCommandTodelete;
                     }while(!cmd_list.search_linked_list(oldCommandTodelete));
-
-
+                    cmd_list.search_and_remove(oldCommandTodelete);
                     break;
                 }
                 case 6: // Exit
                 {
+                    cmd_list.upload_file();
+                    profiles.upload_file();
                     return 0;
                 }
             } // end of switch(selection)

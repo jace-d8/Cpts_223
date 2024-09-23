@@ -6,7 +6,7 @@
 #include <fstream>
 #include <iostream>
 #include "Node.h"
-using std::ifstream;
+using std::fstream;
 using std::endl;
 using std::cout;
 // Must be a singly linked list
@@ -24,7 +24,11 @@ public:
 
     bool search_linked_list(string cmd);
 
+    void search_and_remove(string cmd);
+
     void open_file(const std::string& file_name);
+
+    void download_file();
 
     void upload_file();
 
@@ -41,7 +45,7 @@ public:
 
 private:
     Node<t, d> * _head; // No clue why their needs to be a two type template... the command and description
-    ifstream _input_stream;
+    fstream _commands_stream;
 };
 
 template<typename t, typename d>
@@ -55,9 +59,9 @@ Linked_List<t, d>::~Linked_List()
 template<typename t, typename d>
 bool Linked_List<t,d >::remove_from_front()
 {
-    const Node<t, d>* tempNode = _head;
     if(!this->is_empty())
     {
+        const Node<t, d>* tempNode = _head;
         _head = _head->get_next();
         delete tempNode;
         return true;
@@ -68,12 +72,13 @@ bool Linked_List<t,d >::remove_from_front()
 template<typename t, typename d>
 void Linked_List<t, d>::insert_at_front(Node<t, d> *new_node)
 {
-    Node<t, d>* tmp = _head;
+    Node<t, d>* tmp = nullptr;
     if(this->is_empty())
     {
         _head = new_node;
     }else
     {
+        tmp = _head;
         _head = new_node;
         _head->set_next(tmp);
     }
@@ -95,36 +100,82 @@ bool Linked_List<t, d>::search_linked_list(string cmd)
 }
 
 template<typename t, typename d>
+void Linked_List<t, d>::search_and_remove(string cmd)
+{
+    Node<t, d>* temp = _head, *previous = nullptr;
+    while(temp != nullptr)
+    {
+        if (temp->get_command() == cmd)
+        {
+            if (previous == nullptr)
+            {
+                _head = temp->get_next();
+            }
+            else
+            {
+                previous->set_next(temp->get_next());
+            }
+            delete temp;
+            return;
+        }
+        previous = temp;
+        temp = temp->get_next();
+    }
+}
+
+template<typename t, typename d>
 void Linked_List<t, d>::open_file(const std::string& file_name)
 {
-    if(_input_stream.is_open())
+    if(_commands_stream.is_open())
     {
-        cout<<"File not found"<<endl;
+        cout<<"File open"<<endl;
     }else
     {
-        _input_stream.open(file_name, std::ios::in);
+        _commands_stream.open(file_name, std::ios::in);
 
     }
 }
 
 template<typename t, typename d>
-void Linked_List<t,d>::upload_file()
+void Linked_List<t,d>::download_file()
 {
-    char cmnd[99] = "", ds[99] = "";
-    while(_input_stream.good())
+    std::string cmnd, ds;
+    while (std::getline(_commands_stream, cmnd, ','))
     {
-        _input_stream.getline(cmnd, 99, ',');
-        _input_stream.getline(ds, 99);
-        insert_at_front(new Node<t, d>(cmnd, ds));
+        if (std::getline(_commands_stream, ds))
+        {
+            insert_at_front(new Node<t, d>(cmnd, ds));
+        }
     }
+}
+
+template<typename t, typename d>
+void Linked_List<t, d>::upload_file()
+{
+    _commands_stream.open("commands.csv", std::ios::out);
+    if(_commands_stream.is_open())
+    {
+        Node<t, d>* tmp = _head;
+        while (tmp != nullptr)
+        {
+            // Write command and description separated by a comma, followed by a newline
+            _commands_stream << tmp->get_command() << "," << tmp->get_description() << "\n";
+            tmp = tmp->get_next(); // Move to the next node
+        }
+        _commands_stream.close();
+    }else
+    {
+        cout<<"File not found"<<endl;
+    }
+
 }
 
 template<typename t, typename d>
 void Linked_List<t,d>::close_file()
 {
-    if(_input_stream.is_open())
+    if(_commands_stream.is_open())
     {
-        _input_stream.close();
+        _commands_stream.close();
     }
 }
 
