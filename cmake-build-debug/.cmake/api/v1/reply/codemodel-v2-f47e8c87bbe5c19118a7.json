@@ -9,7 +9,7 @@
 					"jsonFile" : "directory-.-Debug-f5ebdc15457944623624.json",
 					"minimumCMakeVersion" : 
 					{
-						"string" : "3.16"
+						"string" : "3.10"
 					},
 					"projectIndex" : 0,
 					"source" : ".",
@@ -27,7 +27,7 @@
 					[
 						0
 					],
-					"name" : "PA1",
+					"name" : "MA2",
 					"targetIndexes" : 
 					[
 						0
@@ -38,9 +38,9 @@
 			[
 				{
 					"directoryIndex" : 0,
-					"id" : "PA1::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-PA1-Debug-a150d23862aba7642373.json",
-					"name" : "PA1",
+					"id" : "MA2::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-MA2-Debug-3f9cbf0d9b9726534992.json",
+					"name" : "MA2",
 					"projectIndex" : 0
 				}
 			]

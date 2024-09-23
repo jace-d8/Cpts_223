@@ -1,117 +1,95 @@
 /*
-ADVANTAGES/DISADVANTAGES LINKED LIST
-Advantage - Implementation is straightforward using basic search and insert functions
-Disadvantage - A hashmap is the ideal choice here as the command could be the key and the description the value
-making implementation even more straightforward.
-ADVANTAGES/DISADVANTAGES ARRAY
-Advantage - Instant O(1) access to any username or score
-Disadvantage - Fixed size(as I used a static array meaning no destructor needed)
+Inserting the randomly generated integers into a BST generally gives a height in the order of:
+
+Your answer:
+
+
 */
 
-#include <fstream>
-#include <iostream>
-#include <string>
-#include "Game_Wrapper.h"
-#include "Linked_List.h"
-#include "Array.h"
-using namespace std;
+#include <cstdlib> // For rand() and srand()
+#include <ctime>   // For time()
+#include <chrono>
+#include <cmath>
+#include <random>
+#include "BST.h"
 
-void populate(Linked_List<string, string> *mainlist) // Read CSV and input data into a linked list
+double log2(double d)
 {
-    mainlist->open_file("commands.csv");
-    mainlist->download_file();
-    mainlist->close_file();
+    return log(d) / log(2); // log() use e as base
+}
+
+void insertRandomIntegers(BST<int>* root, int numIntegers)
+{
+    // The range of random integers
+    const int minValue = -1000000000;
+    const int maxValue =  1000000000;
+    int randomInteger;
+
+    // Generate a uniform distribution to generate random integers
+    random_device dev;
+    mt19937 rng(dev());
+    uniform_int_distribution<std::mt19937::result_type> dist(minValue, maxValue); 
+
+    // Generate random integers (without duplicates) from the specified range
+    for (int i = 0; i < numIntegers; ++i) {
+        randomInteger = dist(rng);
+        while ( root->contains(randomInteger) == true )
+        {
+            randomInteger = dist(rng);
+        }
+        root->insert(randomInteger);
+    }
 }
 
 int main()
 {
-    Linked_List<string, string> cmd_list;
-    Array<string, int> profiles;
-    populate(&cmd_list);
+    // Seed the random number generator with the current time
+    srand(static_cast<unsigned>(time(0)));
 
-    string userName, newCommandToAdd, oldCommandTodelete, newCommandDescription;
+    // (i) test member functions with simple 6 inputs
+    BST<int> *bst = new BST<int>();
+    bst->insert(11);
+    bst->insert(1);
+    bst->insert(6);
+    bst->insert(-1);
+    bst->insert(-10);
+    bst->insert(100);
 
-    int selection;
-    while (true)
-    {
-        cout << "Please select an option listed below:\n";
-        cout << "1. Game Rules\n2. Play Game\n3. Load Previous Game\n4. Add "
-        "Command\n5. Remove Command\n6. Exit\n";
-        cout << "Your selection: ";
-        cin >> selection;
-        if (cin.fail()) // the input is not an integer
-        {
-            cout << "Your selection is invalid. Please select again." << endl;
-            cout <<
-            "=============================================================================" <<
-            endl << endl;
-            cin.clear();
-            cin.ignore();
-        }
-        else
-        {
-            switch (selection)
-            {
-                case 1: // Game Rules
-                {
-                    cout << "================================= Game Rule"
-                    "===================================" << endl;
-                    cout << "This is a matching game where you will be"
-                    " given a linux command and have to match the cmd with its description.\n";
-                    cout << "You will get to choose from 3 different description options."
-                    " Each correct answer will return a point.\n";
-                    cout << "You can also add and delete commands as needed.\n";
-                    cout << "================================= Game Rule"
-                    "===================================" << endl << endl;
-                    break;
-                }
-                case 2: case 3: // 2. Play Game; 3. Load Previous Game
-                {
-                    do
-                    {
-                        cout << "Please enter your name: ";
-                        cin >> userName;
-                    }while (userName.empty());
-                    ArrayNode<string, int> *current_user = profiles.insert(userName);
-                    Game_Wrapper game_wrapper(&cmd_list, current_user); // this works but current needs to go in array
-                    break;
-                }
-                case 4: // Add Command
-                {
-                    do
-                    {
-                        cout << "To add a command to the library, please enter the"
-                         " command name that you would add: ";
-                        cin >> newCommandToAdd;
-                    }while(cmd_list.search_linked_list(newCommandToAdd));
-                    cout << "What is the command description: ";
+    // a demo for findMin and findMax if "insert" is successfully implemented
+    // cout << "(0) findMin = " << bst->findMin() << endl;
+    // cout << "    findMax = " << bst->findMax() << endl;
 
-                    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // To read whitespaces
-                    std::getline(std::cin, newCommandDescription); // Read the entire line
-                    newCommandDescription =  "\"" + newCommandDescription + "\""; // Add quotes
+    cout << "(1.1) Print BST (in-order traversal): " << endl << " ";
+    bst->printInOrder();
+    cout << endl;
 
-                    cmd_list.insert_at_front(new Node<string, string>(newCommandToAdd, newCommandDescription));
-                    break;
-                }
-                case 5: // Remove Command
-                {
-                    do
-                    {
-                        cout << "Please enter the name of the command that you would"
-                        " like to remove: ";
-                        cin >> oldCommandTodelete;
-                    }while(!cmd_list.search_linked_list(oldCommandTodelete));
-                    cmd_list.search_and_remove(oldCommandTodelete);
-                    break;
-                }
-                case 6: // Exit
-                {
-                    cmd_list.upload_file();
-                    profiles.upload_file();
-                    return 0;
-                }
-            } // end of switch(selection)
-        } // end of else: check (cin.fail())
-    } // end of while(true)
+    cout << "(1.2) Print BST in level order: " << endl;
+    bst->printLevels();
+
+    cout << "(1.3) Is 100 in BST? true (1) or false (0): " << bst->contains(100) << endl;
+
+    cout << "(1.4) Is 9 in BST? true (1) or false (0): " << bst->contains(9) << endl;
+    
+    cout << "(1.5) BST size: " << bst->treeSize() << endl;
+
+    cout << "(1.6) Height of BST: " << bst->treeHeight() << endl;
+    
+    cout << "(1.7) Print max path: " << endl << " ";
+    bst->printMaxPath();
+    cout << endl;
+
+    bst->remove(11);
+    cout << "(1.8) Removing 11, print BST (in-order traversal): " << endl << " ";
+    bst->printInOrder();
+    cout << endl;
+
+    cout << "(1.9) Print BST in level order: " << endl;
+    bst->printLevels();
+
+    cout << "(1.10) BST size: " << bst->treeSize() << endl;
+
+    // Delete this bst
+    delete bst;
+
+    return 0;
 }
-
