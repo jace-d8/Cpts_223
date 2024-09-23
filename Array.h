@@ -52,7 +52,7 @@ private:
 };
 
 template<typename t, typename d>
-Array<t,d>::Array() // download file upon init
+Array<t,d>::Array() // Download file upon init
 {
 	int i = 0;
 	char buffer[100];
@@ -68,6 +68,7 @@ Array<t,d>::Array() // download file upon init
 		_arr[i].set_score(atof(buffer));
 		++i;
 	}
+	_profiles_stream.close();
 }
 
 template<typename t, typename d>
@@ -75,11 +76,11 @@ ArrayNode<t,d>* Array<t, d>::insert(t name)
 {
 	for (auto & i : _arr)
 	{
-		if (i.get_name() == name)
+		if (i.get_name() == name) // If name already exists, insert/return
 		{
 			return &i;
 		}
-		if (i.get_name() == "")
+		if (i.get_name() == "") // Else insert at first blank spot
 		{
 			i.set_name(name);
 			return &i;
@@ -89,7 +90,7 @@ ArrayNode<t,d>* Array<t, d>::insert(t name)
 }
 
 template<typename t, typename d>
-void Array<t, d>::upload_file()
+void Array<t, d>::upload_file() // Upload data to csv file
 {
 	_profiles_stream.open("profiles.csv", std::ios::out);
 	if (_profiles_stream.is_open())

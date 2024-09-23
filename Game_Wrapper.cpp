@@ -10,7 +10,7 @@ Game_Wrapper::Game_Wrapper(Linked_List<string , string>* cmd_list, ArrayNode<str
 	{
 		cout << "How many questions could you like to try?(5-30): ";
 		cin >> _question_count;
-	}while(_question_count > 30 || _question_count < 5);
+	}while(_question_count > 30 || _question_count < 5); // Bounds
 	run_game(cmd_list, user);
 
 }
@@ -20,20 +20,20 @@ void Game_Wrapper::run_game(Linked_List<string , string>* cmd_list, ArrayNode<st
 	std::random_device rd;
 	std::mt19937 gen(rd());
 	std::vector<int> questions(30); // going to use random.python for this bit
-	for (int i = 0; i < 30; ++i)
+	for (int i = 0; i < 30; ++i) // Fill vector of values 1 - 30
 	{
 		questions[i] = i + 1;
 	}
 
-	std::shuffle(questions.begin(), questions.end(), gen);
+	std::shuffle(questions.begin(), questions.end(), gen); // Shuffle the vector using fisher yates algo
 
 	for (int i = 0; i < _question_count; ++i)
 	{
 		_answer = questions.back();
 		questions.pop_back();
 
-		std::shuffle(questions.begin(), questions.end(), gen);
-		_c2 = questions[0];
+		std::shuffle(questions.begin(), questions.end(), gen); // Shuffle again
+		_c2 = questions[0]; // Choice 2 and 3 can be set to the shuffled vectors 1st and 2nd value
 		_c3 = questions[1];
 		get_questions(cmd_list);
 		display_questions(cmd_list, user);
@@ -43,7 +43,7 @@ void Game_Wrapper::run_game(Linked_List<string , string>* cmd_list, ArrayNode<st
 void Game_Wrapper::get_questions(Linked_List<string , string>* cmd_list)
 {
 	const Node<string, string>* tmp = cmd_list->get_head();
-	for (int i = 0; i < _answer && tmp != nullptr; ++i)
+	for (int i = 1; i < _answer; ++i)
 	{
 		tmp = tmp->get_next();
 	}
@@ -54,8 +54,9 @@ void Game_Wrapper::get_questions(Linked_List<string , string>* cmd_list)
 	}
 
 	// Reset head for choice 2
+	// Traverse thru the linked list c2 amount of times giving you a random description
 	tmp = cmd_list->get_head();
-	for (int i = 0; i < _c2; ++i)
+	for (int i = 1; i < _c2; ++i)
 	{
 		tmp = tmp->get_next();
 	}
@@ -66,7 +67,7 @@ void Game_Wrapper::get_questions(Linked_List<string , string>* cmd_list)
 
 	// Reset head for choice 3
 	tmp = cmd_list->get_head();
-	for (int i = 0; i < _c3; ++i)
+	for (int i = 1; i < _c3; ++i)
 	{
 		tmp = tmp->get_next();
 	}
@@ -81,12 +82,12 @@ void Game_Wrapper::display_questions(Linked_List<string , string>* cmd_list, Arr
 	std::random_device rd;
 	std::mt19937 gen(rd());
 	int selection;
-	vector<string> choices = {_correct_choice, _choice2, _choice3};
+	vector<string> choices = {_correct_choice, _choice2, _choice3}; // Make a vector of the 3 choices
 	cout << "Command: " << _cmd << endl;
-	std::shuffle(choices.begin(), choices.end(), gen);
+	std::shuffle(choices.begin(), choices.end(), gen); // Shuffle this vector
 	for (int i = 0; i < choices.size(); ++i)
 	{
-		cout << i + 1 << ". " << choices[i] << endl;
+		cout << i + 1 << ". " << choices[i] << endl; // Display
 	}
 	do
 	{

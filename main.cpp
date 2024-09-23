@@ -1,12 +1,12 @@
 /*
 ADVANTAGES/DISADVANTAGES LINKED LIST
-Advantage -
-Disadvantage -
+Advantage - Implementation is straightforward using basic search and insert functions
+Disadvantage - A hashmap is the ideal choice here as the command could be the key and the description the value
+making implementation even more straightforward.
 ADVANTAGES/DISADVANTAGES ARRAY
-Advantage -
-Disadvantage -
+Advantage - Instant O(1) access to any username or score
+Disadvantage - Fixed size(as I used a static array meaning no destructor needed)
 */
-// naming conventions suck idk if this can go in there
 
 #include <fstream>
 #include <iostream>
@@ -85,8 +85,11 @@ int main()
                         cin >> newCommandToAdd;
                     }while(cmd_list.search_linked_list(newCommandToAdd));
                     cout << "What is the command description: ";
-                    cin >> newCommandDescription;
-                    newCommandDescription = "\"" + newCommandToAdd + "\"";
+
+                    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // To read whitespaces
+                    std::getline(std::cin, newCommandDescription); // Read the entire line
+                    newCommandDescription =  "\"" + newCommandDescription + "\""; // Add quotes
+
                     cmd_list.insert_at_front(new Node<string, string>(newCommandToAdd, newCommandDescription));
                     break;
                 }
