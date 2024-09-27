@@ -24,8 +24,6 @@ void insertRandomIntegers(BST<int>* root, int numIntegers)
     const int minValue = -1000000000;
     const int maxValue =  1000000000;
     int randomInteger;
-
-    // Generate a uniform distribution to generate random integers
     random_device dev;
     mt19937 rng(dev());
     uniform_int_distribution<std::mt19937::result_type> dist(minValue, maxValue); 

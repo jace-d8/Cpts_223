@@ -44,7 +44,8 @@ private:
 	};
 
 	BinaryNode *root;
-
+	void insertHelper(const Comparable &x, BinaryNode *&t);
+	bool containHelper(const Comparable &x, BinaryNode *t) const;
 	BinaryNode * findMin( BinaryNode * t ) const;
 	BinaryNode * findMax( BinaryNode * t ) const;
 	void makeEmpty( BinaryNode * & t );
@@ -94,11 +95,14 @@ const Comparable & BST<Comparable>::findMin() const {
 // private findMin: refer to textbook, Figure 4.20
 template <typename Comparable>
 typename BST<Comparable>::BinaryNode* BST<Comparable>::findMin(BinaryNode * t) const {
-    if ( t == NULL ) {
+    if ( t == NULL )
+    {
         return NULL;
-    } else if (t->left == NULL) {
+    } else if (t->left == NULL)
+    {
         return t;
-    } else {
+    } else
+    {
         return findMin(t->left);
     }
 }
@@ -115,33 +119,83 @@ const Comparable & BST<Comparable>::findMax() const {
 // private findMax: refer to textbook, Figure 4.21
 template <typename Comparable>
 typename BST<Comparable>::BinaryNode* BST<Comparable>::findMax(BinaryNode * t) const {
-    if ( t == NULL ) {
+    if ( t == NULL )
+    {
         return NULL;
-    } else if (t->right == NULL) {
+    } else if (t->right == NULL)
+    {
         return t;
-    } else {
+    } else
+    {
         return findMin(t->right);
     }
 }
 
 // public contains: refer to textbook, Figure 4.17, Line 4 - 7
 template<typename Comparable>
-bool BST<Comparable>::contains( const Comparable & x ) const {
-	cout << "**TODO**: contains function" << endl;
+bool BST<Comparable>::contains( const Comparable & x ) const
+{
+	return containHelper(x, root);
+}
+
+template<typename Comparable>
+bool BST<Comparable>::containHelper(const Comparable &x, BinaryNode *thisRoot) const
+{
+	if(thisRoot)
+	{
+		if(thisRoot->element == x)
+		{
+			return true;
+		}
+		if(thisRoot->element < x) // X is greater than root
+		{
+			return containHelper(x, thisRoot->left);
+		}
+		if(thisRoot->element > x)
+		{
+			return containHelper(x, thisRoot->right);
+		}
+	}
 	return false;
 }
 
+
 // public insert: refer to textbook, Figure 4.17, Line 12 - 15
 template<typename Comparable>
-void BST<Comparable>::insert(const Comparable & x) {
-	cout << "**TODO**: insert function" << endl;
+void BST<Comparable>::insert(const Comparable & x)
+{
+	insertHelper(x, root);
 }
-
+template<typename Comparable>
+void BST<Comparable>::insertHelper(const Comparable & x, BinaryNode *& thisRoot)
+{
+	if(thisRoot == nullptr)
+	{
+		thisRoot = new BinaryNode(x, nullptr, nullptr);
+	}
+	else if(thisRoot->element > x) // go left
+	{
+		insertHelper(x, thisRoot->left);
+	}
+	else if(thisRoot->element < x)
+	{
+		insertHelper(x, thisRoot->right);
+	}
+}
 
 // public remove: refer to textbook, Figure 4.17, Line 20 - 23
 template<typename Comparable>
-void BST<Comparable>::remove( const Comparable & x ) {
-	cout << "**TODO**: remove function" << endl;
+void BST<Comparable>::remove( const Comparable & x )
+{
+	if(this->contains(x))
+	{
+		// balance tree?
+	}
+	else
+	{
+		// throw error or print output error?
+		cout << "Element not found-" << endl;
+	}
 }
 
 // public treeSize
