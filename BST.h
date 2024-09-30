@@ -44,8 +44,12 @@ private:
 	};
 
 	BinaryNode *root;
-	void insertHelper(const Comparable &x, BinaryNode *&t);
 	bool containHelper(const Comparable &x, BinaryNode *t) const;
+	void insertHelper(const Comparable &x, BinaryNode *&t);
+	void removeHelper(const Comparable &x, BinaryNode *&t);
+	int treeSizeHelper(BinaryNode *t) const;
+	int treeHeightHelper(BinaryNode *t) const;
+	void printInOrderHelper(const BinaryNode * t) const;
 	BinaryNode * findMin( BinaryNode * t ) const;
 	BinaryNode * findMax( BinaryNode * t ) const;
 	void makeEmpty( BinaryNode * & t );
@@ -127,7 +131,7 @@ typename BST<Comparable>::BinaryNode* BST<Comparable>::findMax(BinaryNode * t) c
         return t;
     } else
     {
-        return findMin(t->right);
+        return findMax(t->right);
     }
 }
 
@@ -147,11 +151,11 @@ bool BST<Comparable>::containHelper(const Comparable &x, BinaryNode *thisRoot) c
 		{
 			return true;
 		}
-		if(thisRoot->element < x) // X is greater than root
+		if(thisRoot->element > x)
 		{
 			return containHelper(x, thisRoot->left);
 		}
-		if(thisRoot->element > x)
+		if(thisRoot->element < x)
 		{
 			return containHelper(x, thisRoot->right);
 		}
@@ -166,6 +170,9 @@ void BST<Comparable>::insert(const Comparable & x)
 {
 	insertHelper(x, root);
 }
+
+
+
 template<typename Comparable>
 void BST<Comparable>::insertHelper(const Comparable & x, BinaryNode *& thisRoot)
 {
@@ -189,7 +196,7 @@ void BST<Comparable>::remove( const Comparable & x )
 {
 	if(this->contains(x))
 	{
-		// balance tree?
+		removeHelper(x, root);
 	}
 	else
 	{
@@ -198,26 +205,77 @@ void BST<Comparable>::remove( const Comparable & x )
 	}
 }
 
+template<typename Comparable>
+void BST<Comparable>::removeHelper(const Comparable &x, BinaryNode *&t)
+{
+	if(t->element == x)
+	{
+
+	}
+	else if(t->element > x)
+	{
+		removeHelper(x, root->left);
+	}else if(t->element < x)
+	{
+		removeHelper(x, root->right);
+	}
+}
 // public treeSize
 template <typename Comparable>
-int BST<Comparable>::treeSize() const {
-	cout << "**TODO**: treeSize function" << endl;
-	return 0;
+int BST<Comparable>::treeSize() const
+{
+	return treeSizeHelper(root);
+}
+template<typename Comparable>
+int BST<Comparable>::treeSizeHelper(BinaryNode *t) const
+{
+	if(t)
+	{
+		return 1 + treeSizeHelper(t->left) + treeSizeHelper(t->right);
+	}else
+	{
+		return 0;
+	}
 }
 
 // public treeHeight
 template <typename Comparable>
 int BST<Comparable>::treeHeight() const {
-	cout << "**TODO**: treeHeight function" << endl;
-	return 0;
+	return treeHeightHelper(root);
+}
+
+template<typename Comparable>
+int BST<Comparable>::treeHeightHelper(BinaryNode *t) const
+{
+	if(!t)
+		return -1;
+
+	int leftSide = treeHeightHelper(t->left);
+	int rightSide = treeHeightHelper(t->right);
+
+	if(rightSide < leftSide)
+	{
+		return leftSide + 1;
+	}
+	return rightSide + 1;
 }
 
 // public printInOrder: refer to textbook, Figure 4.60
 template<typename Comparable>
-void BST<Comparable>::printInOrder() const {
-	cout << "**TODO**: printInOrder function" << endl;
+void BST<Comparable>::printInOrder() const
+{
+	printInOrderHelper(root);
 }
-
+template<typename Comparable>
+void BST<Comparable>::printInOrderHelper(const BinaryNode *t) const
+{
+	if(t)
+	{
+		printInOrderHelper(t->left);
+		cout <<  t->element << " -> ";
+		printInOrderHelper(t->right);
+	}
+}
 // public printLevels
 template <typename Comparable>
 void BST<Comparable>::printLevels() const {
