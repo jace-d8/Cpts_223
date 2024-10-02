@@ -1,7 +1,9 @@
 /*
 Inserting the randomly generated integers into a BST generally gives a height in the order of:
 
-Your answer:
+Your answer: The height of the bst should be O(log n) as within a large range of values, there is typically a
+50 - 50 change determining whether the next value will be large or small (this is always true when there are no limits
+on the choices of bounds. The worst case is O(n)
 
 
 */
@@ -29,7 +31,8 @@ void insertRandomIntegers(BST<int>* root, int numIntegers)
     uniform_int_distribution<std::mt19937::result_type> dist(minValue, maxValue); 
 
     // Generate random integers (without duplicates) from the specified range
-    for (int i = 0; i < numIntegers; ++i) {
+    for (int i = 0; i < numIntegers; ++i)
+    {
         randomInteger = dist(rng);
         while ( root->contains(randomInteger) == true )
         {
@@ -54,8 +57,8 @@ int main()
     bst->insert(100);
 
     // a demo for findMin and findMax if "insert" is successfully implemented
-    // cout << "(0) findMin = " << bst->findMin() << endl;
-    // cout << "    findMax = " << bst->findMax() << endl;
+    //cout << "(0) findMin = " << bst->findMin() << endl;
+    //cout << "    findMax = " << bst->findMax() << endl;
 
     cout << "(1.1) Print BST (in-order traversal): " << endl << " ";
     bst->printInOrder();

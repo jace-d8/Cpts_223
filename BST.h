@@ -211,22 +211,44 @@ void BST<Comparable>::remove( const Comparable & x )
 template<typename Comparable>
 typename BST<Comparable>::BinaryNode * BST<Comparable>::removeHelper(const Comparable &x, BinaryNode *&t)
 {
+	if(!t) // Youtube and office hours were used for delete funcion
+	{
+		return t;
+	}
 	if(t->element == x) // found the target node
 	{
 		if(!t->left && !t->right) // leaf, safe to delete
 		{
 			delete t;
 			t = nullptr;
-			return t;
+		}else if(!(t->left) || !(t->right)) // one child, replace the node simply becomes its single child
+		{
+			BinaryNode* temp = t;
+			if(t->left)
+			{
+				t = t->left;
+			}
+			else
+			{
+				t = t->right;
+			}
+			delete temp;
+		}else // two children are present
+		{
+			BinaryNode* temp = findMin(t->right);
+			t->element = temp->element;
+			t->right = removeHelper(temp->element, t->right);
 		}
+		return t;
 	}
-	else if(t->element > x)
+	else if(t->element > x) // Go left
 	{
-		t->left = removeHelper(x, root->left);
+		t->left = removeHelper(x, t->left);
 	}else if(t->element < x)
 	{
-		t->right = removeHelper(x, root->right);
+		t->right = removeHelper(x, t->right);
 	}
+	return t;
 }
 
 // public treeSize
@@ -290,9 +312,10 @@ void BST<Comparable>::printInOrderHelper(const BinaryNode *t) const
 template <typename Comparable>
 void BST<Comparable>::printLevels() const
 {
-	for(int i = 1; i <= treeHeight(); ++i)
+	for(int i = 0; i <= treeHeight(); ++i)
 	{
 		printLevelsHelper(root, 0, i);
+		cout << "\n";
 	}
 }
 
@@ -313,17 +336,28 @@ void BST<Comparable>::printLevelsHelper(BinaryNode *t, int depth, int target) co
 	if(depth == target)
 	{
 		cout << t->element << " ";
-	}else
+	}else if(depth < target) // If depth is less than target proceed
 	{
-		cout << "\n";
-		return;
+		printLevelsHelper(t->left, depth + 1, target);
+		printLevelsHelper(t->right, depth + 1, target);
 	}
-	printLevelsHelper(t->left, depth + 1, target);
-	printLevelsHelper(t->right, depth + 1, target);
 }
 
 template<typename Comparable>
 void BST<Comparable>::printMaxPathHelper(const BinaryNode *t) const
 {
+	if(!t) // Office hours and YT were used to help this function
+	{
+		return;
+	}
+	cout << t->element << " ";
+	// We need to first know what way to go down, left or right
+	if(treeHeightHelper(t->left) > treeHeightHelper(t->right)) // These will help me pathfind
+	{
+		printMaxPathHelper(t->left); // If the path can be followed "further" down left, go left
+	}else
+	{
+		printMaxPathHelper(t->right); // Otherwise go right
+	}
 }
 #endif
