@@ -11,7 +11,7 @@
 # =============================================================================
 
 # =============================================================================
-# Project: MA2
+# Project: PA2
 # Configurations: Debug
 # =============================================================================
 
@@ -41,35 +41,41 @@ include CMakeFiles/rules.ninja
 
 cmake_ninja_workdir = /Users/jacedunn/CLionProjects/Cpts_223/cmake-build-debug/
 # =============================================================================
-# Object build statements for EXECUTABLE target MA2
+# Object build statements for EXECUTABLE target PA2
 
 
 #############################################
-# Order-only phony target for MA2
+# Order-only phony target for PA2
 
-build cmake_object_order_depends_target_MA2: phony || .
+build cmake_object_order_depends_target_PA2: phony || .
 
-build CMakeFiles/MA2.dir/main.cpp.o: CXX_COMPILER__MA2_unscanned_Debug /Users/jacedunn/CLionProjects/Cpts_223/main.cpp || cmake_object_order_depends_target_MA2
-  DEP_FILE = CMakeFiles/MA2.dir/main.cpp.o.d
+build CMakeFiles/PA2.dir/main.cpp.o: CXX_COMPILER__PA2_unscanned_Debug /Users/jacedunn/CLionProjects/Cpts_223/main.cpp || cmake_object_order_depends_target_PA2
+  DEP_FILE = CMakeFiles/PA2.dir/main.cpp.o.d
   FLAGS = -Wall -g -std=gnu++11 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.0.sdk -mmacosx-version-min=14.5 -fcolor-diagnostics
-  OBJECT_DIR = CMakeFiles/MA2.dir
-  OBJECT_FILE_DIR = CMakeFiles/MA2.dir
+  OBJECT_DIR = CMakeFiles/PA2.dir
+  OBJECT_FILE_DIR = CMakeFiles/PA2.dir
+
+build CMakeFiles/PA2.dir/experimentFunctions.cpp.o: CXX_COMPILER__PA2_unscanned_Debug /Users/jacedunn/CLionProjects/Cpts_223/experimentFunctions.cpp || cmake_object_order_depends_target_PA2
+  DEP_FILE = CMakeFiles/PA2.dir/experimentFunctions.cpp.o.d
+  FLAGS = -Wall -g -std=gnu++11 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.0.sdk -mmacosx-version-min=14.5 -fcolor-diagnostics
+  OBJECT_DIR = CMakeFiles/PA2.dir
+  OBJECT_FILE_DIR = CMakeFiles/PA2.dir
 
 
 # =============================================================================
-# Link build statements for EXECUTABLE target MA2
+# Link build statements for EXECUTABLE target PA2
 
 
 #############################################
-# Link the executable MA2
+# Link the executable PA2
 
-build MA2: CXX_EXECUTABLE_LINKER__MA2_Debug CMakeFiles/MA2.dir/main.cpp.o
+build PA2: CXX_EXECUTABLE_LINKER__PA2_Debug CMakeFiles/PA2.dir/main.cpp.o CMakeFiles/PA2.dir/experimentFunctions.cpp.o
   FLAGS = -Wall -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.0.sdk -mmacosx-version-min=14.5
-  OBJECT_DIR = CMakeFiles/MA2.dir
+  OBJECT_DIR = CMakeFiles/PA2.dir
   POST_BUILD = :
   PRE_LINK = :
-  TARGET_FILE = MA2
-  TARGET_PDB = MA2.dbg
+  TARGET_FILE = PA2
+  TARGET_PDB = PA2.dbg
 
 
 #############################################
@@ -105,7 +111,7 @@ build rebuild_cache: phony CMakeFiles/rebuild_cache.util
 #############################################
 # Folder: /Users/jacedunn/CLionProjects/Cpts_223/cmake-build-debug
 
-build all: phony MA2
+build all: phony PA2
 
 # =============================================================================
 # Built-in targets
