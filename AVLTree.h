@@ -44,11 +44,12 @@ private:
     };
 
     AVLNode *root;
-
     AVLNode * findMin( AVLNode * t ) const;
     AVLNode * findMax( AVLNode * t ) const;
+    bool containsHelper( const Comparable & theElement, AVLNode* node) const;
+    void insertHelper( const Comparable & theElement, AVLNode* node );
+    void removeHelper( const Comparable & theElement, AVLNode* node );
     void makeEmpty( AVLNode * & t );
-
     void balance(AVLNode * & t);
     void rotateWithLeftChild( AVLNode * & t );
     void rotateWithRightChild( AVLNode * & t );
@@ -93,12 +94,16 @@ const Comparable & AVLTree<Comparable>::findMin() const {
     return findMin(root)->element;
 }
 
+
+
 // private findMin: follow the findMin in BST, referring to textbook, Figure 4.20
 template <typename Comparable>
-typename AVLTree<Comparable>::AVLNode* AVLTree<Comparable>::findMin(AVLNode * t) const {
+typename AVLTree<Comparable>::AVLNode* AVLTree<Comparable>::findMin(AVLNode * t) const
+{
     if ( t == NULL ) {
         return NULL;
-    } else if (t->left == NULL) {
+    } else if (t->left == NULL)
+{
         return t;
     } else {
         return findMin(t->left);
@@ -126,24 +131,99 @@ typename AVLTree<Comparable>::AVLNode* AVLTree<Comparable>::findMax(AVLNode * t)
     }
 }
 
+
+
 // start our implementation:
 // public contains: follow the contains in BST, referring to textbook, Figure 4.17 and Figure 4.18
 template<typename Comparable>
-bool AVLTree<Comparable>::contains( const Comparable & x ) const {
-    cout << "TODO: contains function" << endl;
+bool AVLTree<Comparable>::contains( const Comparable & x ) const
+{
+    return containsHelper(x, root);
+}
+
+template<typename Comparable>
+bool AVLTree<Comparable>::containsHelper(const Comparable &theElement, AVLNode *node) const
+{
+    if(node)
+    {
+        if(node->element == theElement)
+        {
+            return true;
+        }
+        if(node->element > theElement)
+        {
+            containsHelper(theElement, node->left);
+        }
+        if(node->element < theElement)
+        {
+            containsHelper(theElement, node->right);
+        }
+    }
     return false;
 }
 
 // public insert: following BST, referring to textbook, Figure 4.17 and Figure 4.23
 template<typename Comparable>
-void AVLTree<Comparable>::insert(const Comparable & x) {
-    cout << "TODO: insert function" << endl;
+void AVLTree<Comparable>::insert(const Comparable & x)
+{
+insertHelper(x, root);
+}
+
+template<typename Comparable>
+void AVLTree<Comparable>::insertHelper(const Comparable &theElement, AVLNode *node)
+{
+    if(!node)
+    {
+        root = new AVLNode(theElement, nullptr, nullptr);
+    }else if(node->element > theElement)
+    {
+        insertHelper(theElement, node->left);
+    }else if (node->element < theElement)
+    {
+        insertHelper(theElement, node->right);
+    }
 }
 
 // public remove: refer to textbook, Figure 4.17 and Figure 4.26
 template<typename Comparable>
 void AVLTree<Comparable>::remove( const Comparable & x ) {
     cout << "TODO: remove function" << endl;
+}
+
+template<typename Comparable>
+void AVLTree<Comparable>::removeHelper(const Comparable &theElement, AVLNode *node)
+{
+    if(node->element > theElement)
+    {
+        removeHelper(theElement, node->left);
+    }else if (node->element < theElement)
+    {
+        removeHelper(theElement, node->right);
+    }else if (node->element == theElement)
+    {
+        if(!node->left && !node->right)
+        {
+            delete node;
+            node = nullptr;
+        }else if(!(node->left && node->right)) // One child
+        {
+            const AVLNode* temp = node; // Need a temp to avoid dangling pointers/memory leak
+            if(node->left)
+            {
+                node = node->left;
+            }else
+            {
+                node = node->right;
+            }
+            delete temp;
+        }else // Two children
+        {
+            // I forget how to do this
+        }
+    }else
+    {
+        cout << "Element not found" << endl;
+    }
 }
 
 // private balance: refer to textbook, Figure 4.42, Line 21 - 40
