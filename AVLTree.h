@@ -170,11 +170,12 @@ insertHelper(x, root);
 }
 
 template<typename Comparable>
-void AVLTree<Comparable>::insertHelper(const Comparable &theElement, AVLNode *node)
+void AVLTree<Comparable>::insertHelper(const Comparable &theElement, AVLNode *node) // add balance
 {
     if(!node)
     {
         root = new AVLNode(theElement, nullptr, nullptr);
+        // balance here
     }else if(node->element > theElement)
     {
         insertHelper(theElement, node->left);
@@ -193,6 +194,10 @@ void AVLTree<Comparable>::remove( const Comparable & x ) {
 template<typename Comparable>
 void AVLTree<Comparable>::removeHelper(const Comparable &theElement, AVLNode *node)
 {
+    if(!node)
+    {
+        return;
+    }
     if(node->element > theElement)
     {
         removeHelper(theElement, node->left);
@@ -205,6 +210,7 @@ void AVLTree<Comparable>::removeHelper(const Comparable &theElement, AVLNode *no
         {
             delete node;
             node = nullptr;
+            // balance
         }else if(!(node->left && node->right)) // One child
         {
             const AVLNode* temp = node; // Need a temp to avoid dangling pointers/memory leak
@@ -216,6 +222,7 @@ void AVLTree<Comparable>::removeHelper(const Comparable &theElement, AVLNode *no
                 node = node->right;
             }
             delete temp;
+            // balance
         }else // Two children
         {
             // I forget how to do this
@@ -235,8 +242,13 @@ void AVLTree<Comparable>::balance(AVLNode * & t) {
 
 // private rotateWithLeftChild: for case 1, referring to textbook, Figure 4.44 (code) and Figure 4.43 (visualization)
 template<typename Comparable>
-void AVLTree<Comparable>::rotateWithLeftChild(AVLNode * & k2) {
-    cout << "TODO: rotateWithLeftChild function" << endl;
+void AVLTree<Comparable>::rotateWithLeftChild(AVLNode * & k2) // Some subtree
+{
+    AVLNode* leftChild = k2->left; // Perform links before changing k2 identity
+    k2->left = leftChild->right; // Set leftChild's right node to the old roots left child.
+    leftChild->right = k2; // Set k2 to leftChild's right child
+    // change depth
+    k2 = leftChild; // Links are set - make leftChild the new root
 }
 
 // private rotateWithRightChild: for case 4 (the mirrored case of case 1)
