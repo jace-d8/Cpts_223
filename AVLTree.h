@@ -24,6 +24,7 @@ public:
 
 
 
+
     int computeHeight() const;
     int readRootHeight() const;
     bool isBalanced() const;
@@ -52,16 +53,18 @@ private:
     bool containsHelper( const Comparable & theElement, AVLNode* node) const;
     void insertHelper( const Comparable & theElement, AVLNode*& node );
     void removeHelper( const Comparable & theElement, AVLNode*& node );
-    bool isBSTHelper(AVLNode* node, vector<int> &nodes) const;
+    void isBSTHelper(AVLNode* node, vector<Comparable> &nodeElements) const;
+    bool isBalancedHelper(AVLNode* node) const;
     int treeSizeHelper(AVLNode *t) const;
+    int sumHeight(AVLNode* node) const;
     int computeHeightHelper(AVLNode* node) const;
     void removeByRankHelper(AVLNode* node, int rank);
     void makeEmpty( AVLNode * & t );
     void balance(AVLNode * & t);
-    void rotateWithLeftChild( AVLNode * & t );
-    void rotateWithRightChild( AVLNode * & t );
-    void doubleWithLeftChild( AVLNode * & t);
-    void doubleWithRightChild( AVLNode * & t);
+    void rotateWithLeftChild( AVLNode * & k2 );
+    void rotateWithRightChild( AVLNode * & k2 );
+    void doubleWithLeftChild( AVLNode * & k3);
+    void doubleWithRightChild( AVLNode * & k3);
 };
 
 // constructor
@@ -138,8 +141,6 @@ typename AVLTree<Comparable>::AVLNode* AVLTree<Comparable>::findMax(AVLNode * t)
     }
 }
 
-
-
 // start our implementation:
 // public contains: follow the contains in BST, referring to textbook, Figure 4.17 and Figure 4.18
 template<typename Comparable>
@@ -159,11 +160,11 @@ bool AVLTree<Comparable>::containsHelper(const Comparable &theElement, AVLNode *
         }
         if(node->element > theElement)
         {
-            containsHelper(theElement, node->left);
+            return containsHelper(theElement, node->left);
         }
         if(node->element < theElement)
         {
-            containsHelper(theElement, node->right);
+            return containsHelper(theElement, node->right);
         }
     }
     return false;
@@ -192,6 +193,7 @@ void AVLTree<Comparable>::insertHelper(const Comparable &theElement, AVLNode *&n
         insertHelper(theElement, node->right);
     }
     balance(node);
+    node->height = max(node->left ? node->left->height : -1, node->right ? node->right->height : -1) + 1;
 }
 
 // public remove: refer to textbook, Figure 4.17 and Figure 4.26
@@ -258,18 +260,17 @@ void AVLTree<Comparable>::balance(AVLNode * & t)
 
     if (leftHeight - rightHeight > ALLOWED_IMBALANCE) {
         if (leftLeftHeight >= leftRightHeight) {
-            rotateWithRightChild(t);
-        } else {
             rotateWithLeftChild(t);
+        } else {
+            doubleWithLeftChild(t);
         }
     } else if (rightHeight - leftHeight > ALLOWED_IMBALANCE) {
         if (rightRightHeight >= rightLeftHeight) {
-            rotateWithLeftChild(t);
-        } else {
             rotateWithRightChild(t);
+        } else {
+            doubleWithRightChild(t);
         }
     }
-
     t->height = max(leftHeight, rightHeight) + 1;
 }
 
@@ -285,7 +286,7 @@ void AVLTree<Comparable>::rotateWithLeftChild(AVLNode * & k2) // Some subtree
     k2->left = leftChild->right; // Set leftChild's right node to the old roots left child.
     leftChild->right = k2; // Set k2 to leftChild's right child
     k2->height = max(k2->left ? k2->left->height : -1, k2->right ? k2->right->height : -1 ) + 1;
-    leftChild->height = max( leftChild->left ? leftChild->height : -1 , k2->height ) + 1; // change depth
+    leftChild->height = max( leftChild->left ? leftChild->left->height : -1 , k2->height ) + 1; // change depth
     k2 = leftChild; // Links are set - make leftChild the new root
 }
 
@@ -322,28 +323,71 @@ void AVLTree<Comparable>::doubleWithRightChild(AVLNode * & k3)
 
 // public isBalanced
 template <class Comparable>
-bool AVLTree<Comparable>::isBalanced() const {
-    cout << "TODO: isBalanced function" << endl;
-    return false;
+bool AVLTree<Comparable>::isBalanced() const
+{
+   return isBalancedHelper(root);
 }
 
+template<typename Comparable>
+bool AVLTree<Comparable>::isBalancedHelper(AVLNode *node) const
+{
+    if(!node)
+    {
+        return true;
+    }
+    bool leftB = isBalancedHelper(node->left);
+    bool rightB =  isBalancedHelper(node->right);
+    int leftH = computeHeightHelper(node->left);
+    int rightH = computeHeightHelper(node->right);
+    if(leftH - rightH > ALLOWED_IMBALANCE || leftH - rightH < -ALLOWED_IMBALANCE || !leftB || !rightB)
+    {
+        return false;
+    }
+    return true;
+}
 // public isBST
 template <class Comparable>
 bool AVLTree<Comparable>::isBST() const
 {
-    return isBSTHelper(root);
+    vector<Comparable> nodeElements;
+    isBSTHelper(root, nodeElements);
+    for(int i = 0; i + 1 < nodeElements.size(); i++)
+    {
+        if(nodeElements[i] > nodeElements[i + 1]) // Make sure nodes are inOrder
+        {
+            return false;
+        }
+    }
+    return true;
 }
 
-template<typename Comparable> // return to later this doesnt work
-bool AVLTree<Comparable>::isBSTHelper(AVLNode *node, vector<int> &nodes) const
+template<typename Comparable>
+void AVLTree<Comparable>::isBSTHelper(AVLNode *node, vector<Comparable> &nodeElements) const
 {
-
+    if(!node)
+    {
+        return;
+    }
+    isBSTHelper(node->left, nodeElements); // Insert into vector inOrder
+    nodeElements.push_back(node->element);
+    isBSTHelper(node->right, nodeElements);
 }
+
 // public treeSize
 template <typename Comparable>
 int AVLTree<Comparable>::treeSize() const
 {
     return treeSizeHelper(root);
+}
+
+template<typename Comparable>
+int AVLTree<Comparable>::sumHeight(AVLNode* node) const
+{
+    if(!node)
+    {
+        return 0;
+    }
+    return node->height + sumHeight(node->left) + sumHeight(node->right);
 }
 
 template<typename Comparable>
@@ -391,7 +435,7 @@ double AVLTree<Comparable>::averageDepth() const
     {
         return 0.0;
     }
-    return static_cast<double>(computeHeight()) / static_cast<double>(treeSize());
+    return static_cast<double>(sumHeight(root)) / static_cast<double>(treeSize());
 }
 
 // public removeByRank
