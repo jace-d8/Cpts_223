@@ -50,11 +50,12 @@ private:
     AVLNode * findMin( AVLNode * t ) const;
     AVLNode * findMax( AVLNode * t ) const;
     bool containsHelper( const Comparable & theElement, AVLNode* node) const;
-    void insertHelper( const Comparable & theElement, AVLNode* node );
-    void removeHelper( const Comparable & theElement, AVLNode* node );
-    bool isBSTHelper(AVLNode* node);
+    void insertHelper( const Comparable & theElement, AVLNode*& node );
+    void removeHelper( const Comparable & theElement, AVLNode*& node );
+    bool isBSTHelper(AVLNode* node, vector<int> &nodes) const;
     int treeSizeHelper(AVLNode *t) const;
-    int computeHeightHelper(AVLNode* node);
+    int computeHeightHelper(AVLNode* node) const;
+    void removeByRankHelper(AVLNode* node, int rank);
     void makeEmpty( AVLNode * & t );
     void balance(AVLNode * & t);
     void rotateWithLeftChild( AVLNode * & t );
@@ -172,23 +173,25 @@ bool AVLTree<Comparable>::containsHelper(const Comparable &theElement, AVLNode *
 template<typename Comparable>
 void AVLTree<Comparable>::insert(const Comparable & x)
 {
-insertHelper(x, root);
+    insertHelper(x, root);
 }
 
 template<typename Comparable>
-void AVLTree<Comparable>::insertHelper(const Comparable &theElement, AVLNode *node) // add balance
+void AVLTree<Comparable>::insertHelper(const Comparable &theElement, AVLNode *&node) // add balance
 {
     if(!node)
     {
-        root = new AVLNode(theElement, nullptr, nullptr);
-        // balance here
-    }else if(node->element > theElement)
+        node = new AVLNode(theElement, nullptr, nullptr);
+        return;
+    }
+    if(node->element > theElement)
     {
         insertHelper(theElement, node->left);
     }else if (node->element < theElement)
     {
         insertHelper(theElement, node->right);
     }
+    balance(node);
 }
 
 // public remove: refer to textbook, Figure 4.17 and Figure 4.26
@@ -199,7 +202,7 @@ void AVLTree<Comparable>::remove( const Comparable & x )
 }
 
 template<typename Comparable>
-void AVLTree<Comparable>::removeHelper(const Comparable &theElement, AVLNode *node)
+void AVLTree<Comparable>::removeHelper(const Comparable &theElement, AVLNode *&node)
 {
     if(!node)
     {
@@ -217,7 +220,6 @@ void AVLTree<Comparable>::removeHelper(const Comparable &theElement, AVLNode *no
         {
             delete node;
             node = nullptr;
-            balance(node);
         }else if(!(node->left && node->right)) // One child
         {
             const AVLNode* temp = node; // Need a temp to avoid dangling pointers/memory leak
@@ -229,17 +231,14 @@ void AVLTree<Comparable>::removeHelper(const Comparable &theElement, AVLNode *no
                 node = node->right;
             }
             delete temp;
-            balance(node);
         }else // Two children
         {
             node->element = findMin(node->right)->element;
-            remove(node->element, node->right);
+            removeHelper(node->element, node->right);
         }
     }
-
+    balance(node);
 }
-
-
 
 // private balance: refer to textbook, Figure 4.42, Line 21 - 40
 // assume t is the node that violates the AVL condition, and we then identify which case to use (out of 4 cases)
@@ -250,52 +249,58 @@ void AVLTree<Comparable>::balance(AVLNode * & t)
     {
         return;
     }
-    if(height(t->left) - height(t->right) > ALLOWED_IMBALANCE)
-    {
-        if(height(t->left->left) >= height(t->left->right))
-        {
+    int leftHeight = t->left ? t->left->height : -1;
+    int rightHeight = t->right ? t->right->height : -1;
+    int leftLeftHeight = t->left && t->left->left ? t->left->left->height : -1;
+    int leftRightHeight = t->left && t->left->right ? t->left->right->height : -1;
+    int rightLeftHeight = t->right && t->right->left ? t->right->left->height : -1;
+    int rightRightHeight = t->right && t->right->right ? t->right->right->height : -1;
+
+    if (leftHeight - rightHeight > ALLOWED_IMBALANCE) {
+        if (leftLeftHeight >= leftRightHeight) {
             rotateWithRightChild(t);
-        }else
-        {
+        } else {
             rotateWithLeftChild(t);
         }
-    }else
-    {
-        if(height(t->right) - height(t->left) > ALLOWED_IMBALANCE)
-        {
-            if(height(t->right->right) >= height(t->right->left))
-            {
-                rotateWithLeftChild(t);
-            }else
-            {
-                rotateWithRightChild(t);
-            }
+    } else if (rightHeight - leftHeight > ALLOWED_IMBALANCE) {
+        if (rightRightHeight >= rightLeftHeight) {
+            rotateWithLeftChild(t);
+        } else {
+            rotateWithRightChild(t);
         }
     }
-    t->height = max(hieght(t->left), hieght(t->right)) + 1;
+
+    t->height = max(leftHeight, rightHeight) + 1;
 }
 
 // private rotateWithLeftChild: for case 1, referring to textbook, Figure 4.44 (code) and Figure 4.43 (visualization)
 template<typename Comparable>
 void AVLTree<Comparable>::rotateWithLeftChild(AVLNode * & k2) // Some subtree
 {
+    if(!k2->left)
+    {
+        return;
+    }
     AVLNode* leftChild = k2->left; // Perform links before changing k2 identity
     k2->left = leftChild->right; // Set leftChild's right node to the old roots left child.
     leftChild->right = k2; // Set k2 to leftChild's right child
-    k2->height = max( height( k2->left ), height( k2->right ) ) + 1;
-    leftChild->height = max( height( leftChild->left ), k2->height ) + 1; // change depth
+    k2->height = max(k2->left ? k2->left->height : -1, k2->right ? k2->right->height : -1 ) + 1;
+    leftChild->height = max( leftChild->left ? leftChild->height : -1 , k2->height ) + 1; // change depth
     k2 = leftChild; // Links are set - make leftChild the new root
 }
 
-// private rotateWithRightChild: for case 4 (the mirrored case of case 1)
 template<typename Comparable>
 void AVLTree<Comparable>::rotateWithRightChild(AVLNode * & k2)
 {
+    if (!k2->right)
+    {
+        return;
+    }
     AVLNode* rightChild = k2->right;
     k2->right = rightChild->left;
     rightChild->left = k2;
-    k2->height = max( height( k2->left ), height( k2->right ) ) + 1;
-    rightChild->height = max(height(rightChild->right), k2->height) + 1;
+    k2->height = max(k2->left ? k2->left->height : -1, k2->right ? k2->right->height : -1) + 1;
+    rightChild->height = max(rightChild->left ? rightChild->left->height : -1, rightChild->right ? rightChild->right->height : -1) + 1;
     k2 = rightChild;
 }
 
@@ -326,21 +331,13 @@ bool AVLTree<Comparable>::isBalanced() const {
 template <class Comparable>
 bool AVLTree<Comparable>::isBST() const
 {
-    return isBSTHelper();
+    return isBSTHelper(root);
 }
 
 template<typename Comparable> // return to later this doesnt work
-bool AVLTree<Comparable>::isBSTHelper(AVLNode *node)
+bool AVLTree<Comparable>::isBSTHelper(AVLNode *node, vector<int> &nodes) const
 {
-    if(!node)
-    {
-        return true;
-    }
-    if(node->element < this->findMin(node) || node->element > this->findMax(node))
-    {
-        return false;
-    }
-    return isBSTHelper(node);
+
 }
 // public treeSize
 template <typename Comparable>
@@ -359,21 +356,19 @@ int AVLTree<Comparable>::treeSizeHelper(AVLNode *t) const
     return 0;
 }
 
-
-// public computeHeight. See Figure 4.61 in Textbook
+// Public computeHeight. See Figure 4.61 in Textbook
 template <typename Comparable>
 int AVLTree<Comparable>::computeHeight() const
 {
-    cout << "TODO: computeHeight function" << endl;
-    return -1;
+    return computeHeightHelper(root);
 }
 template<typename Comparable>
-int AVLTree<Comparable>::computeHeightHelper(AVLNode *node)
+int AVLTree<Comparable>::computeHeightHelper(AVLNode *node) const
 {
         if(!node)
             return -1;
-        int leftSide = treeHeightHelper(node->left);
-        int rightSide = treeHeightHelper(node->right);
+        int leftSide = computeHeightHelper(node->left);
+        int rightSide = computeHeightHelper(node->right);
         if(rightSide < leftSide)
         {
             return leftSide + 1;
@@ -385,22 +380,43 @@ int AVLTree<Comparable>::computeHeightHelper(AVLNode *node)
 template <typename Comparable>
 int AVLTree<Comparable>::readRootHeight() const
 {
-    cout << "TODO: readRootHeight function" << endl;
-    return -1;
+    return root->height;
 }
 
 // public averageDepth
 template <typename Comparable>
 double AVLTree<Comparable>::averageDepth() const
 {
-    cout << "TODO: averageDepth function" << endl;
-    return 0.0;
+    if(!root || this->treeSize() == 0)
+    {
+        return 0.0;
+    }
+    return static_cast<double>(computeHeight()) / static_cast<double>(treeSize());
 }
 
 // public removeByRank
 template <typename Comparable>
 void AVLTree<Comparable>::removeByRank(int rank)
 {
-    cout << "TODO: removeByRank function" << endl;
+    removeByRankHelper(root, rank);
 }
 
+template<typename Comparable>
+void AVLTree<Comparable>::removeByRankHelper(AVLNode *node, int rank)
+{
+    if(!node)
+    {
+        return;
+    }
+    int currentRank = treeSizeHelper(node->left);
+    if(currentRank == rank)
+    {
+        this->remove(node->element);
+    }else if(currentRank > rank)
+    {
+        removeByRankHelper(node->left, rank);
+    }else
+    {
+        removeByRankHelper(node->right, rank - currentRank - 1);
+    }
+}
