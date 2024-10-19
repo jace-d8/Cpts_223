@@ -27,7 +27,7 @@
 					[
 						0
 					],
-					"name" : "PA1",
+					"name" : "MA3",
 					"targetIndexes" : 
 					[
 						0
@@ -38,9 +38,9 @@
 			[
 				{
 					"directoryIndex" : 0,
-					"id" : "MA_1::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-MA_1-Debug-43cc2ccd77133d0786a3.json",
-					"name" : "MA_1",
+					"id" : "MA3::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-MA3-Debug-d5be9741faf2bdd03558.json",
+					"name" : "MA3",
 					"projectIndex" : 0
 				}
 			]
