@@ -59,12 +59,41 @@ bool testDeleteByKey(map<string, User> aMap, string keyToDelete) {
 
 void printActiveUsers(map<string, User> aMap) {
     int activeThreshold = 800;
-    cout << "TODO" << endl;
+    for(const auto& user : aMap)
+    {
+        if(user.second.numPosts > activeThreshold)
+        {
+            cout << user.second.userName; // Instead of .first in case email is used as key
+        }
+    }
 }
 
 
-void printMostPopularCategory(map<string, User> aMap) {    
-    cout << "TODO" << endl;
+void printMostPopularCategory(map<string, User> aMap)
+{
+    map<string, int> catagoryViews = {
+        {"Technology", 0},
+        {"Sports", 0},
+        {"Music", 0},
+        {"Food", 0},
+        {"Travel", 0},
+        {"Education", 0}
+    };
+    for(const auto& items : aMap)
+    {
+        catagoryViews[items.second.mostViewedCategory]++;
+    }
+    int mostViewed = 0;
+    string topCategory;
+    for(const auto& items : catagoryViews)
+    {
+        if(mostViewed < items.second)
+        {
+            mostViewed = items.second;
+            topCategory = items.first;
+        }
+    }
+    cout << "Most popular catagory: " << topCategory;
 }
 
 
