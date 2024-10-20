@@ -68,7 +68,7 @@ vector<User> readCSV(const string& fileName) {
 
     if (!file.is_open()) {
         cerr << "Unable to open file: " << fileName << endl;
-        return users; // return an empty vector if not openning
+        return users; // return an empty vector if not opening
     }
 
     string line;

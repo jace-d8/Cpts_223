@@ -5,46 +5,55 @@ using namespace std;
 
 map<string, User> buildMapByUserName(vector<User> users) {
     map<string, User> usersMap;
-    
-    cout << "TODO" << endl;
-
+    for (const auto& user : users)
+    {
+        usersMap.insert({user.userName, user});
+    }
     return usersMap;
 }
 
 
 map<string, User> buildMapByEmail(vector<User> users) {
     map<string, User> usersMap;
-    
-    cout << "TODO" << endl;
-
+    for( auto user : users )
+    {
+        usersMap.insert({user.email, user});
+    }
     return usersMap;
 }
 
 
 void printMap(map<string, User> aMap) {
-    cout << "TODO" << endl;
+    for(const auto& items : aMap)
+    {
+        cout << "Key: " << items.first;
+    }
 }
 
 
 bool isMapSorted(map<string, User> aMap) {
     if ( aMap.empty() )
         return true;
-    
-    cout << "TODO" << endl;
-
     return false;
-}
+} // Think this one out
 
 
 bool testSearchByKey(map<string, User> aMap, string keyToSearch) {
-    cout << "TODO" << endl;
+    if(aMap.count(keyToSearch))
+    {
+        return true;
+    }
     return false;
 }
 
 
 bool testDeleteByKey(map<string, User> aMap, string keyToDelete) {
-    cout << "TODO" << endl;
-    return false;
+    if(!aMap.count(keyToDelete))
+    {
+        return false;
+    }
+    aMap.erase(keyToDelete);
+    return true;
 }
 
 
