@@ -31,12 +31,21 @@ void printMap(map<string, User> aMap) {
 }
 
 
-bool isMapSorted(map<string, User> aMap) {
+bool isMapSorted(map<string, User> aMap)
+{
     if ( aMap.empty() )
         return true;
-    return false;
-} // Think this one out
-
+    auto first = aMap.begin();
+    auto next = ++first;
+    for(; next != aMap.end(); ++first, ++next)
+    {
+        if(first->second.userName > next->second.userName)
+        {
+            return false;
+        }
+    }
+    return true;
+}
 
 bool testSearchByKey(map<string, User> aMap, string keyToSearch) {
     if(aMap.count(keyToSearch))
@@ -46,7 +55,6 @@ bool testSearchByKey(map<string, User> aMap, string keyToSearch) {
     return false;
 }
 
-
 bool testDeleteByKey(map<string, User> aMap, string keyToDelete) {
     if(!aMap.count(keyToDelete))
     {
@@ -55,7 +63,6 @@ bool testDeleteByKey(map<string, User> aMap, string keyToDelete) {
     aMap.erase(keyToDelete);
     return true;
 }
-
 
 void printActiveUsers(map<string, User> aMap) {
     int activeThreshold = 800;
@@ -67,7 +74,6 @@ void printActiveUsers(map<string, User> aMap) {
         }
     }
 }
-
 
 void printMostPopularCategory(map<string, User> aMap)
 {
@@ -93,7 +99,7 @@ void printMostPopularCategory(map<string, User> aMap)
             topCategory = items.first;
         }
     }
-    cout << "Most popular catagory: " << topCategory;
+    cout << "Most popular category: " << topCategory;
 }
 
 
@@ -101,7 +107,6 @@ int main()
 {
     int numUsers = 10;
     vector<User> users = generateUsers(numUsers);
-
 
     cout << "Build map with username as key" << endl;
     map<string, User> mapByUserName = buildMapByUserName(users);
@@ -147,9 +152,7 @@ int main()
     printMostPopularCategory(mapByUserName);
     cout << endl;
 
-
     cout << " ============================================================================== " << endl << endl;
-
 
     cout << "Build map with username as key" << endl;
     map<string, User> mapByEmail = buildMapByEmail(users);
@@ -158,7 +161,6 @@ int main()
     else
         cout << "  Built unsuccessfully." << endl << endl;
     
-
     keyToSearch = "kat@gmail.com";
     cout << "Search by key: mapByEmail[\"" << keyToSearch << "\"]" << endl;
     if ( testSearchByKey(mapByEmail, keyToSearch) )
@@ -173,7 +175,6 @@ int main()
         cout << "  Delete successfully." << endl << endl;
     else
         cout << "  Delete unsuccessfully." << endl << endl;
-
 
     return 0;
 }
