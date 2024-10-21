@@ -36,7 +36,8 @@ bool isMapSorted(map<string, User> aMap)
     if ( aMap.empty() )
         return true;
     auto first = aMap.begin();
-    auto next = ++first;
+    auto next = aMap.begin();
+    ++next;
     for(; next != aMap.end(); ++first, ++next)
     {
         if(first->second.userName > next->second.userName)
