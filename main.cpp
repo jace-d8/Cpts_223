@@ -26,7 +26,11 @@ map<string, User> buildMapByEmail(vector<User> users) {
 void printMap(map<string, User> aMap) {
     for(const auto& items : aMap)
     {
-        cout << "Key: " << items.first;
+        cout << items.first << ", ";
+        cout << items.second.firstName << " " << items.second.lastName << ", ";
+        cout << items.second.email << ", ";
+        cout << items.second.numPosts << ", ";
+        cout << items.second.mostViewedCategory << endl;
     }
 }
 
