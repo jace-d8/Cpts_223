@@ -60,7 +60,7 @@ bool testSearchByKey(map<string, User> aMap, string keyToSearch) {
     return false;
 }
 
-bool testDeleteByKey(map<string, User> aMap, string keyToDelete) {
+bool testDeleteByKey(map<string, User>& aMap, string keyToDelete) {
     if(!aMap.count(keyToDelete))
     {
         return false;
