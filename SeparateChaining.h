@@ -27,7 +27,10 @@ class ChainingHash
 
     void makeEmpty( )
     {
-        // TODO: refer to Figure 5.9 in textbook
+        for(auto& list : theLists)
+        {
+            list.clear(); // Clear every linked list
+        }
     }
 
     bool insert( const HashedObj & x )
@@ -46,7 +49,10 @@ class ChainingHash
 
     bool remove( const HashedObj & x )
     {
-        // TODO: refer to Figure 5.9 in textbook
+        auto & whichList = theLists[ myhash( x ) ];
+        auto iterate = find( begin( whichList ), end( whichList ), x );
+        if()
+
         return false;
     }
 
@@ -66,7 +72,7 @@ class ChainingHash
     }
 
   private:
-    vector<list<HashedObj>> theLists;   // The array of Lists
+    vector<list<HashedObj>> theLists;   // The array of Lists - hashed obj is the type of the items in the table
     int currentSize;
 
     void rehash( )
@@ -77,7 +83,7 @@ class ChainingHash
     size_t myhash( const HashedObj & x ) const
     {
         static hash<HashedObj> hf;
-        return hf( x ) % theLists.size( );
+        return hf( x ) % theLists.size( ); // Revisit to understand
     }
 
     double loadFactor()

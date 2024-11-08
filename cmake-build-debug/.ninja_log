@@ -1,6 +1,11 @@
 # ninja log v6
 1	467	1730320535603851881	CMakeFiles/PA3.dir/utils.cpp.o	d121e51a5af006da
 1	476	1730320535598698135	CMakeFiles/PA3.dir/main.cpp.o	28a1cd80ce819da7
-7	491	1730320535605104557	CMakeFiles/PA3.dir/testLinearProbing.cpp.o	400cdb74ced5a813
 7	494	1730320535604553719	CMakeFiles/PA3.dir/testSeparateChaining.cpp.o	aa151edabff85024
+7	491	1730320535605104557	CMakeFiles/PA3.dir/testLinearProbing.cpp.o	400cdb74ced5a813
 494	529	1730320536091700322	PA3	5d98236c5aa5d1a6
+2	354	1731100884146410222	CMakeFiles/PA3.dir/utils.cpp.o	d121e51a5af006da
+2	386	1731100884145926055	CMakeFiles/PA3.dir/main.cpp.o	28a1cd80ce819da7
+2	395	1731100884146722098	CMakeFiles/PA3.dir/testLinearProbing.cpp.o	400cdb74ced5a813
+2	399	1731100884146587181	CMakeFiles/PA3.dir/testSeparateChaining.cpp.o	aa151edabff85024
+399	436	1731100884543788695	PA3	5d98236c5aa5d1a6
