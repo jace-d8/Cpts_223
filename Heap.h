@@ -34,29 +34,46 @@ private:
 	 */
 	void percolateDown(unsigned int hole)
 	{
-		std::swap(_items[0], _items[_items.size() - 1]);
-		_items.pop_back();
-		bool done = false;
-
-		int item_index = 0;
-		while(!done)
+		int child;
+		T  tmp = std::move( _items[ hole ] );
+		int currentSize = _items.size();
+		for( ; hole * 2 <= currentSize; hole = child )
 		{
-			int child_index_a = item_index * 2 + 1, child_index_b = item_index * 2 + 2;
-			done = true;
-			if(child_index_a < _items.size() && _items[child_index_a] < _items[item_index] )
+			child = hole * 2;
+			if( child != currentSize && _items[ child +1]< _items[ child ] )
+				++child;
+			if( _items[ child ] < tmp )
 			{
-				std::swap(_items[child_index_a], _items[item_index]);
-				item_index = child_index_a;
-				done = false;
-			}
-			if(child_index_b < _items.size() && _items[child_index_b] < _items[item_index] )
+				_items[ hole ] = std::move( _items[ child ] );
+			}else
 			{
-				std::swap(_items[child_index_b], _items[item_index]);
-				item_index = child_index_b;
-				done = false;
+				break;
 			}
 		}
+		_items[ hole ] = std::move( tmp );
 	}
+		// std::swap(_items[0], _items[_items.size() - 1]);
+		// _items.pop_back();
+		// bool done = false;
+		//
+		// int item_index = 0;
+		// while(!done)
+		// {
+		// 	int child_index_a = item_index * 2 + 1, child_index_b = item_index * 2 + 2;
+		// 	done = true;
+		// 	if(child_index_a < _items.size() && _items[child_index_a] < _items[item_index] )
+		// 	{
+		// 		std::swap(_items[child_index_a], _items[item_index]);
+		// 		item_index = child_index_a;
+		// 		done = false;
+		// 	}
+		// 	if(child_index_b < _items.size() && _items[child_index_b] < _items[item_index] )
+		// 	{
+		// 		std::swap(_items[child_index_b], _items[item_index]);
+		// 		item_index = child_index_b;
+		// 		done = false;
+		// 	}
+		// }
 
 	/**
 	 *  Add a new item to the end of the heap and percolate up this item to fix heap property
@@ -65,22 +82,31 @@ private:
 	 */
 	void percolateUp(T item)
 	{
-		_items.insert(item);
-		int item_index = _items.size() - 1;
-		int parent_index = _items[floor(item_index - 1)];
-		while(parent_index < item_index)
+		int hole = _items.size();
+		T copy = item;
+		_items.push_back(copy);
+		for( ; item < _items[ hole / 2 ]; hole /= 2 )
 		{
-			std::swap(_items[parent_index], _items[item_index]);
-			--item_index;
-			if(item_index == 0)
-			{
-				break;
-			}
+			_items[ hole ] = std::move( _items[ hole / 2 ] );
 		}
+		_items[ hole ] = std::move(item);
+		// _items.push_back(item);
+		// int item_index = _items.size() - 1;
+		// int parent_index = floor(item_index - 1);
+		// while(parent_index < item_index)
+		// {
+		// 	std::swap(_items[parent_index], _items[item_index]);
+		// 	--item_index;
+		// 	if(item_index == 0)
+		// 	{
+		// 		break;
+		// 	}
+		// }
 		// while element in hole is less than parent
 		// parent and hole swap places
 		// put element in hole
 	}
+
 
 	/********************** End Microassigment zone *********************/
 

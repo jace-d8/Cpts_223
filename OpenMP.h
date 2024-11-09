@@ -58,9 +58,12 @@ void calSum()
     // find the sum of the array "data" and assign to the variable "sum"
     // will compare it with the one found by STL accumulate() later
     omp_set_num_threads(num_threads);
-#pragma omp parallel
+#pragma omp parallel for reduction(+:sum)
     {
-        // TODO
+        for (int i = 0; i < data_size; ++i)
+        {
+            sum += data[i];
+        }
     }
     // -------------- above TODO: OpenMP implementation --------------
 
@@ -102,7 +105,13 @@ void calMax()
     omp_set_num_threads(num_threads);
 #pragma omp parallel
     {
-        // TODO
+        for(int i = 0; i < data_size; ++i)
+        {
+            if(data[i] > max)
+            {
+                max = data[i];
+            }
+        }
     }
     // -------------- above TODO: OpenMP implementation --------------
 
