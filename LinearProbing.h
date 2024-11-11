@@ -51,10 +51,18 @@ class ProbingHash
     
     bool insert( HashedObj && x )
     {
-        // TODO: refer to Figure 5.17 in textbook for quadratic probing
-        // this "insert" function accepts *Rvalues*
-        // so needs to use "move" (slightly different from the above one)
-        return false;
+        // Insert x as active
+        int currentPos = findPos( x );
+        if( isActive( currentPos ) )
+            return false;
+
+        array[ currentPos ].element = std::move( x );
+        array[ currentPos ].info = ACTIVE;
+
+        if( ++currentSize > array.size() / 2 )
+            rehash();
+
+        return true;
     }
 
     bool remove( const HashedObj & x )
@@ -145,8 +153,7 @@ class ProbingHash
 
     double loadFactor()
     {
-        // TODO: compute the load factor of hash table, defined on Page 198 of textbook
-        return 0.0;
+        return static_cast<double>(currentSize) / array.size();
     }
 };
 

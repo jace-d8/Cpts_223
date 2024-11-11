@@ -46,9 +46,13 @@ class ChainingHash
     
     bool insert( HashedObj && x )
     {
-        // TODO: this "insert" function accepts *Rvalues*
-        // so needs to use "move" (slightly different from the above one)
-        return false;
+        auto & whichList = theLists[ myhash( x ) ];
+        if( find( begin( whichList ), end( whichList ), x ) != end( whichList ) )
+            return false;
+        whichList.push_back( std::move( x ) );
+        if( ++currentSize > theLists.size() )
+            rehash();
+        return true;
     }
 
     bool remove( const HashedObj & x )
@@ -108,8 +112,7 @@ class ChainingHash
 
     double loadFactor()
     {
-        // TODO: compute the load factor of hash table, defined on Page 198 of textbook
-        return 0.0;
+        return static_cast<double>(theLists.size()) / theLists.size();
     }
 };
 
