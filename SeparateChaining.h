@@ -21,8 +21,8 @@ class ChainingHash
 
     bool contains( const HashedObj & x ) const
     {
-        // TODO: refer to Figure 5.9 in textbook
-        return false;
+        auto & whichList = theLists[ myhash( x ) ];
+        return find( begin( whichList ), end( whichList ), x ) != end( whichList );
     }
 
     void makeEmpty( )
@@ -35,9 +35,13 @@ class ChainingHash
 
     bool insert( const HashedObj & x )
     {
-        // TODO: refer to Figure 5.10 in textbook
-        // this "insert" function accepts Lvalues
-        return false;
+        auto & whichList = theLists[ myhash( x ) ];
+        if( find( begin( whichList ), end( whichList ), x ) != end( whichList ) )
+            return false;
+        whichList.push_back( x );
+        if( ++currentSize > theLists.size() )
+            rehash();
+        return true;
     }
     
     bool insert( HashedObj && x )
@@ -50,10 +54,15 @@ class ChainingHash
     bool remove( const HashedObj & x )
     {
         auto & whichList = theLists[ myhash( x ) ];
-        auto iterate = find( begin( whichList ), end( whichList ), x );
-        if()
+        auto itr = find( begin( whichList ), end( whichList ), x );
 
-        return false;
+        if( itr == end( whichList ) )
+            return false;
+
+        whichList.erase( itr );
+        --currentSize;
+        return true;
+
     }
 
     double readLoadFactor() 
@@ -77,7 +86,18 @@ class ChainingHash
 
     void rehash( )
     {
-        // TODO: refer to Figure 5.22 in textbook
+        vector<list<HashedObj>> oldLists = theLists;
+
+        // Create new double-sized, empty table
+        theLists.resize( nextPrime( 2 * theLists.size() ) );
+        for( auto & thisList : theLists )
+            thisList.clear();
+
+        // Copy table over
+        currentSize = 0;
+        for( auto & thisList : oldLists )
+            for( auto & x : thisList )
+                insert( std::move( x ) );
     }
 
     size_t myhash( const HashedObj & x ) const
