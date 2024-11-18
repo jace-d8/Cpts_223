@@ -819,7 +819,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "CPTS223_PA3"
+			"value" : "PA4"
 		},
 		{
 			"name" : "CMAKE_RANLIB",
@@ -1118,7 +1118,7 @@
 			"value" : "FALSE"
 		},
 		{
-			"name" : "CPTS223_PA3_BINARY_DIR",
+			"name" : "PA4_BINARY_DIR",
 			"properties" : 
 			[
 				{
@@ -1130,7 +1130,7 @@
 			"value" : "/Users/jacedunn/CLionProjects/Cpts_223/cmake-build-debug"
 		},
 		{
-			"name" : "CPTS223_PA3_IS_TOP_LEVEL",
+			"name" : "PA4_IS_TOP_LEVEL",
 			"properties" : 
 			[
 				{
@@ -1142,7 +1142,7 @@
 			"value" : "ON"
 		},
 		{
-			"name" : "CPTS223_PA3_SOURCE_DIR",
+			"name" : "PA4_SOURCE_DIR",
 			"properties" : 
 			[
 				{

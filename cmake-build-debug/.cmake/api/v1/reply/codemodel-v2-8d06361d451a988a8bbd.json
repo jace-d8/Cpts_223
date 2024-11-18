@@ -27,7 +27,7 @@
 					[
 						0
 					],
-					"name" : "CPTS223_PA3",
+					"name" : "PA4",
 					"targetIndexes" : 
 					[
 						0
@@ -38,9 +38,9 @@
 			[
 				{
 					"directoryIndex" : 0,
-					"id" : "PA3::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-PA3-Debug-aaf98228ea0bb9ac25ef.json",
-					"name" : "PA3",
+					"id" : "PA4::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-PA4-Debug-c21121666973d1b31175.json",
+					"name" : "PA4",
 					"projectIndex" : 0
 				}
 			]

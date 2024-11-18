@@ -11,7 +11,7 @@
 # =============================================================================
 
 # =============================================================================
-# Project: CPTS223_PA3
+# Project: PA4
 # Configurations: Debug
 # =============================================================================
 
@@ -41,53 +41,35 @@ include CMakeFiles/rules.ninja
 
 cmake_ninja_workdir = /Users/jacedunn/CLionProjects/Cpts_223/cmake-build-debug/
 # =============================================================================
-# Object build statements for EXECUTABLE target PA3
+# Object build statements for EXECUTABLE target PA4
 
 
 #############################################
-# Order-only phony target for PA3
+# Order-only phony target for PA4
 
-build cmake_object_order_depends_target_PA3: phony || .
+build cmake_object_order_depends_target_PA4: phony || .
 
-build CMakeFiles/PA3.dir/main.cpp.o: CXX_COMPILER__PA3_unscanned_Debug /Users/jacedunn/CLionProjects/Cpts_223/main.cpp || cmake_object_order_depends_target_PA3
-  DEP_FILE = CMakeFiles/PA3.dir/main.cpp.o.d
+build CMakeFiles/PA4.dir/main.cpp.o: CXX_COMPILER__PA4_unscanned_Debug /Users/jacedunn/CLionProjects/Cpts_223/main.cpp || cmake_object_order_depends_target_PA4
+  DEP_FILE = CMakeFiles/PA4.dir/main.cpp.o.d
   FLAGS = -Wall -g -std=gnu++11 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk -mmacosx-version-min=14.5 -fcolor-diagnostics
-  OBJECT_DIR = CMakeFiles/PA3.dir
-  OBJECT_FILE_DIR = CMakeFiles/PA3.dir
-
-build CMakeFiles/PA3.dir/utils.cpp.o: CXX_COMPILER__PA3_unscanned_Debug /Users/jacedunn/CLionProjects/Cpts_223/utils.cpp || cmake_object_order_depends_target_PA3
-  DEP_FILE = CMakeFiles/PA3.dir/utils.cpp.o.d
-  FLAGS = -Wall -g -std=gnu++11 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk -mmacosx-version-min=14.5 -fcolor-diagnostics
-  OBJECT_DIR = CMakeFiles/PA3.dir
-  OBJECT_FILE_DIR = CMakeFiles/PA3.dir
-
-build CMakeFiles/PA3.dir/testSeparateChaining.cpp.o: CXX_COMPILER__PA3_unscanned_Debug /Users/jacedunn/CLionProjects/Cpts_223/testSeparateChaining.cpp || cmake_object_order_depends_target_PA3
-  DEP_FILE = CMakeFiles/PA3.dir/testSeparateChaining.cpp.o.d
-  FLAGS = -Wall -g -std=gnu++11 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk -mmacosx-version-min=14.5 -fcolor-diagnostics
-  OBJECT_DIR = CMakeFiles/PA3.dir
-  OBJECT_FILE_DIR = CMakeFiles/PA3.dir
-
-build CMakeFiles/PA3.dir/testLinearProbing.cpp.o: CXX_COMPILER__PA3_unscanned_Debug /Users/jacedunn/CLionProjects/Cpts_223/testLinearProbing.cpp || cmake_object_order_depends_target_PA3
-  DEP_FILE = CMakeFiles/PA3.dir/testLinearProbing.cpp.o.d
-  FLAGS = -Wall -g -std=gnu++11 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk -mmacosx-version-min=14.5 -fcolor-diagnostics
-  OBJECT_DIR = CMakeFiles/PA3.dir
-  OBJECT_FILE_DIR = CMakeFiles/PA3.dir
+  OBJECT_DIR = CMakeFiles/PA4.dir
+  OBJECT_FILE_DIR = CMakeFiles/PA4.dir
 
 
 # =============================================================================
-# Link build statements for EXECUTABLE target PA3
+# Link build statements for EXECUTABLE target PA4
 
 
 #############################################
-# Link the executable PA3
+# Link the executable PA4
 
-build PA3: CXX_EXECUTABLE_LINKER__PA3_Debug CMakeFiles/PA3.dir/main.cpp.o CMakeFiles/PA3.dir/utils.cpp.o CMakeFiles/PA3.dir/testSeparateChaining.cpp.o CMakeFiles/PA3.dir/testLinearProbing.cpp.o
+build PA4: CXX_EXECUTABLE_LINKER__PA4_Debug CMakeFiles/PA4.dir/main.cpp.o
   FLAGS = -Wall -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk -mmacosx-version-min=14.5
-  OBJECT_DIR = CMakeFiles/PA3.dir
+  OBJECT_DIR = CMakeFiles/PA4.dir
   POST_BUILD = :
   PRE_LINK = :
-  TARGET_FILE = PA3
-  TARGET_PDB = PA3.dbg
+  TARGET_FILE = PA4
+  TARGET_PDB = PA4.dbg
 
 
 #############################################
@@ -123,7 +105,7 @@ build rebuild_cache: phony CMakeFiles/rebuild_cache.util
 #############################################
 # Folder: /Users/jacedunn/CLionProjects/Cpts_223/cmake-build-debug
 
-build all: phony PA3
+build all: phony PA4
 
 # =============================================================================
 # Built-in targets
