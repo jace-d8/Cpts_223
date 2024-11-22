@@ -26,10 +26,6 @@ public:
             }
             arr[j + 1] = tmp;
         }
-        // 1, 3, 4, 5, 6, 2
-        // 1, 3, 4, 5, 2, 6
-        /// 1, 3, 4, 2, 5, 6
-        // Super simple version:
         // while(!isSorted(arr))
         // {
         //     for(int i = 0, j = i + 1; j < arr.size(); i++, j++)
@@ -53,16 +49,57 @@ public:
         // position, and we get the index of the pivot
         // Recursively apply the same process to the two partitioned sub-arrays (left and right of the pivot).
         // The recursion stops when there is only one element left in the sub-array, as a single element is already sorted.
+        if(left + 10 <= right)
+        {
+           int pivot = median3(arr, left, right);
+            int i = left, j = right - 1;
+            while(true)
+            {
+                while (arr[++i] < pivot) { }
+                while (pivot < arr[--j]) { }
+                if (i < j)
+                {
+                    std::swap(arr[i], arr[j]);
+                }
+                else
+                {
+                    break;
+                }
+            }
+            std::swap(arr[i], arr[right - 1]); // Restore pivot
+            quickSort(arr, left, i - 1); // Sort small elements
+            quickSort(arr, i + 1, right); // Sort large elements
+        }else
+        {
+            insertionSort(arr, left, right);
+        }
     }
 
     // merge sort
     void mergeSort(std::vector<int>& arr, int left, int right)
     {
-        //
+
     }
 
+    int median3(std::vector<int>& arr, int left, int right)
+    {
+        int center = (left + right) / 2;
+
+        if (arr[center] < arr[left])
+            std::swap(arr[left], arr[center]);
+        if (arr[right] < arr[left])
+            std::swap(arr[left], arr[right]);
+        if (arr[right] < arr[center])
+            std::swap(arr[center], arr[right]);
+
+        // Place pivot at position right - 1
+        std::swap(arr[center], arr[right - 1]);
+        return arr[right - 1];
+
+    }
     // generate random integers
-    std::vector<int> generateRandomArray(int size) {
+    std::vector<int> generateRandomArray(int size)
+    {
         std::vector<int> arr(size);
         std::random_device rd;
         std::mt19937 gen(rd());
@@ -85,7 +122,7 @@ public:
 
     // comparison run time for three sorting algorithms
     void compareSortingAlgorithms() {
-        std::vector<int> sizes = {10, 1000, 10000, 100000}; // data scales
+        std::vector<int> sizes = {1000, 10000, 100000}; // data scales
         for (int size : sizes) {
             std::vector<int> arr = generateRandomArray(size);
             
@@ -125,9 +162,7 @@ private:
 };
 
 int main() {
-    std::vector<int> test = {1, 3, 4, 5, 6, 7, 8, 2};
     SortingComparison sorter;
-    sorter.insertionSort(test, 0 , test.size() - 1);
     sorter.compareSortingAlgorithms();
     return 0;
 }
