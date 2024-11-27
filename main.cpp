@@ -74,11 +74,53 @@ public:
             insertionSort(arr, left, right);
         }
     }
-
-    // merge sort
-    void mergeSort(std::vector<int>& arr, int left, int right)
+    static void merge(std::vector<int>& arr, std::vector<int>& tmpArray, int left, int right, int rightEnd)
     {
+        const int leftEnd = right - 1;
+        int tmpPos = left;
+        const int numElements = rightEnd - left + 1;
 
+        while (left <= leftEnd && right <= rightEnd)
+        {
+            if (arr[left] <= arr[right]) {
+                tmpArray[tmpPos++] = arr[left++];
+            } else {
+                tmpArray[tmpPos++] = arr[right++];
+            }
+        }
+
+        while (right <= rightEnd)
+        {
+            tmpArray[tmpPos++] = arr[right++];
+        }
+        while (left <= leftEnd)
+        {
+            tmpArray[tmpPos++] = arr[left++];
+        }
+
+        for (int i = 0; i < numElements; ++i, --rightEnd)
+        {
+            arr[rightEnd] = tmpArray[rightEnd];
+        }
+    }
+
+    // Merge Sort function
+    void mergeSort(std::vector<int>& arr, std::vector<int>& tmpArr, int left, int right)
+    {
+        if (left < right)
+        {
+            int mid = (left + right) / 2;
+            mergeSort(arr, tmpArr, mid + 1, right);
+            mergeSort(arr, tmpArr, left, mid);
+            merge(arr, tmpArr, left, mid + 1, right);
+        }
+    }
+
+    // Helper function to initiate mergeSort
+    void mergeSort(std::vector<int>& arr)
+    {
+        std::vector<int> tmpArr(arr.size());
+        mergeSort(arr, tmpArr, 0, arr.size() - 1);
     }
 
     int median3(std::vector<int>& arr, int left, int right)
@@ -149,7 +191,7 @@ public:
             // test merge sort
             arr_copy = arr;
             start = std::chrono::high_resolution_clock::now();
-            mergeSort(arr_copy, 0, arr_copy.size() - 1);
+            mergeSort(arr_copy);
             end = std::chrono::high_resolution_clock::now();
             elapsed = end - start;
             std::cout << "Merge Sort: " << elapsed.count() << " seconds\n";
