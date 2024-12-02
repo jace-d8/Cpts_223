@@ -146,7 +146,7 @@ CMAKE_PROJECT_DESCRIPTION:STATIC=
 CMAKE_PROJECT_HOMEPAGE_URL:STATIC=
 
 //Value Computed by CMake
-CMAKE_PROJECT_NAME:STATIC=PA4
+CMAKE_PROJECT_NAME:STATIC=MA5
 
 //Path to a program.
 CMAKE_RANLIB:FILEPATH=/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib
@@ -214,13 +214,13 @@ CMAKE_TAPI:FILEPATH=/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeD
 CMAKE_VERBOSE_MAKEFILE:BOOL=FALSE
 
 //Value Computed by CMake
-PA4_BINARY_DIR:STATIC=/Users/jacedunn/CLionProjects/Cpts_223/cmake-build-debug
+MA5_BINARY_DIR:STATIC=/Users/jacedunn/CLionProjects/Cpts_223/cmake-build-debug
 
 //Value Computed by CMake
-PA4_IS_TOP_LEVEL:STATIC=ON
+MA5_IS_TOP_LEVEL:STATIC=ON
 
 //Value Computed by CMake
-PA4_SOURCE_DIR:STATIC=/Users/jacedunn/CLionProjects/Cpts_223
+MA5_SOURCE_DIR:STATIC=/Users/jacedunn/CLionProjects/Cpts_223
 
 
 ########################

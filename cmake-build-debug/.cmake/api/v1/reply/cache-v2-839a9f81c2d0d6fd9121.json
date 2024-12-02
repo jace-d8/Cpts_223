@@ -819,7 +819,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "PA4"
+			"value" : "MA5"
 		},
 		{
 			"name" : "CMAKE_RANLIB",
@@ -1118,7 +1118,7 @@
 			"value" : "FALSE"
 		},
 		{
-			"name" : "PA4_BINARY_DIR",
+			"name" : "MA5_BINARY_DIR",
 			"properties" : 
 			[
 				{
@@ -1130,7 +1130,7 @@
 			"value" : "/Users/jacedunn/CLionProjects/Cpts_223/cmake-build-debug"
 		},
 		{
-			"name" : "PA4_IS_TOP_LEVEL",
+			"name" : "MA5_IS_TOP_LEVEL",
 			"properties" : 
 			[
 				{
@@ -1142,7 +1142,7 @@
 			"value" : "ON"
 		},
 		{
-			"name" : "PA4_SOURCE_DIR",
+			"name" : "MA5_SOURCE_DIR",
 			"properties" : 
 			[
 				{
